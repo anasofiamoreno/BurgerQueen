@@ -4,6 +4,7 @@ import {MenuD} from './components/MenuD'
 import {React, useState}  from 'react'  
 import {menulist} from './data/listmenu'
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [state, setState] = useState({
@@ -56,10 +57,10 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <MenuS state = {state} fnData = {fnData}/>
-      <ContentPage state = {state} fnData = {fnData}/>
-      <MenuD/>
+    <div key={uuidv4()} className="App">
+      <MenuS  state = {state} fnData = {fnData}/>
+      <ContentPage  state = {state} fnData = {fnData}/>
+      <MenuD />
 
     </div>
   );

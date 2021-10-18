@@ -1,27 +1,28 @@
 import React from 'react'
 
 export function MenuItem({item, price, state, fnData}) {
-    
-  const fnAddItem = (item,price) =>{
+
+  const fnSetItem = (option, item, price, state) =>{
+
     let items = state.costumers[state.sCostumer]
-
-    if(items[item] === undefined){
-      items[item] = {quantity:1, type: false, "price": price}
-    }
-    else{
-      items[item].quantity+=1
-    }
-
-    fnData("changCostumer",items)
-
-  }
-
-  const fnRemoveItem = () =>{
-    let items = state.costumers[state.sCostumer]
-
-    items[item] && (items[item].quantity > 1) ?  items[item].quantity-=1 : delete items[item]
     
-    fnData("changCostumer",items)
+    switch(option){
+      case "add":
+        if(items[item] === undefined){
+          items[item] = {quantity:1, type: false, "price": price}
+        }
+        else{
+          items[item].quantity+=1
+        }
+        break;
+      case "remove":
+        items[item] && (items[item].quantity > 1) ?  items[item].quantity-=1 : delete items[item]
+        break;
+      default: return items
+    }
+    
+    return items
+    
   }
 
   return (
@@ -31,8 +32,8 @@ export function MenuItem({item, price, state, fnData}) {
         <td>{price}</td>
         <td>
           <div className="cContournMenuByItem">
-            <button className="cButtonType03" onClick = {() => {fnAddItem(item,price)}} >+</button>
-            <button className="cButtonType03" onClick = {fnRemoveItem} >-</button>   
+            <button className="cButtonType03" onClick = {() => {fnData("changCostumer",fnSetItem("add", item, price, state))}} >+</button>
+            <button className="cButtonType03" onClick = {() => {fnData("changCostumer",fnSetItem("remove", item, 0, state))}} >-</button>   
           </div> 
         </td>
         
