@@ -1,0 +1,288 @@
+:root {
+  --main-bg-color: brown;
+}
+
+/*Menu Superior/////////////////////////////////////*/
+
+.cMenuS{
+  position: fixed;
+  top: 0%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 10%;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  background-color: #24221b;
+}
+
+.cImgLogo{
+  height: 90%;
+  
+}
+
+.cMenuSI{
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 100%;
+  margin-left: 1%;
+} 
+
+.cMenuSD{
+  display: flex;
+  justify-content: right;
+  margin-left: 1%;
+}
+
+
+
+/*Content/////////////////////////////////////*/
+
+.cContentP{
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  top: 10%;
+  width: 100%;
+  height: 85%;
+  background-color: rgba(36, 34, 27, .62);
+}
+
+p{
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
+#idLogIn{
+  display: none;
+}
+
+.cFormLogIn{
+display: flex;
+position: fixed;
+top: 11%;
+right: 1%;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+height: auto;
+width: fit-content;
+padding: 0em 2em 1em 2em;
+background-image:url('./img/wrn.jpg');
+background-size: cover;
+border-radius: 10px;
+}
+
+.cImgBack{
+  height: 50%;
+  display: block;
+  margin: auto;
+  
+}
+
+.cMenuBQ{
+height: 90%;
+}
+
+.cContournMenu{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+  min-height: 80%;
+  margin: 1%;
+  background-image:url('./img/burgerbackground.jpeg');
+  /*background-size: contain;*/
+  border-radius: 15px;
+}
+
+.cContournMenuSup{
+  display: flex;
+  justify-content:space-around;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cContournMenuDow{
+  width: 98%;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cContournMenuByItem{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  
+}
+
+.cTable{
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  
+  text-align: left;
+}
+
+
+.cTable th:nth-child(1) {
+  width: 50%;
+}
+
+.cTable th:nth-child(2) {
+  width: 20%;
+}
+.cTable th:nth-child(3) {
+  width: 30%;
+}
+
+.cTable td:nth-child(1) {
+  text-align: left;
+  padding-left: 1em;
+}
+
+.cTable th:nth-child(1) {
+  text-align: left;
+  padding-left: 2em;
+}
+.cTable th:nth-child(2) {
+  text-align: center;
+}
+
+.cTable td:nth-child(2) {
+  text-align: center;
+}
+
+.cTableResume{
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  
+  text-align: left;
+}
+
+
+.cTableResume th:nth-child(1) {
+  width: 60%;
+  padding-left: 2em;
+}
+
+.cTableResume th:nth-child(2) {
+  width: 20%;
+  text-align: center;
+}
+.cTableResume th:nth-child(3) {
+  width: 20%;
+  text-align: center;
+}
+
+.cTableResume td:nth-child(1) {
+  text-align: left;
+  padding-left: 1em;
+}
+
+.cTableResume td:nth-child(2) {
+  text-align: center;
+}
+
+.cTableResume td:nth-child(3) {
+  text-align: center;
+}
+
+.cResumeOrder{
+  height: 90%;
+}
+
+.cContournResumeOrder{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-width: 200px;
+  min-height: 80%;
+  margin: 10px;
+  background-image:url('./img/burgerbackground.jpeg');
+  /*background-size: contain;*/
+  border-radius: 15px;
+}
+
+
+
+.cMenuD{
+  position: fixed;
+  top: 95%;
+  width: 100%;
+  height: 5%;
+  background-color: #24221b;
+}
+
+
+
+/*Buttons/////////////////////////////////////*/
+
+.cButtonType00{
+  border-radius: 5px;
+  background-color: #dba42b;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+
+.cButtonType01{
+  border-radius: 10px;
+  background-color: #24221b;
+  text-shadow: 1px 1px 6px #000;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.cButtonType03{
+  border-radius: 5px;
+  background-color: #dba42b;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 100%;
+  width: 40%;
+}
+
+
+/*Fonts/////////////////////////////////////*/
+
+.cFontTypeTitleS{
+  color: black;
+  font-weight: bold;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.3em;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-seriff;
+}
+
+.cFontTypeTitleM{
+  color: white;
+  -webkit-text-stroke: 2px black;
+  font-weight: bold;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 2.5em;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-seriff;
+}
+
+/*Inputs/////////////////////////////////////*/
+
+.cInputType00{
+  color: black;
+  font-size: 1.3em;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-seriff;
+}
+
+.cInputType00::placeholder{
+  color: #dba32b8a;
+  font-size: 1.1em;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Sans Unicode', Geneva, Verdana, sans-seriff;
+}
