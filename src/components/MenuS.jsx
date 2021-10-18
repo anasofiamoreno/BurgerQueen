@@ -10,16 +10,28 @@ export function MenuS({state, fnData}) {
     document.getElementById('idLogIn').style.display = "block";
   }
 
-  const fnCreateOrder= () => {
-    if(document.getElementById('idInputNewC').value !== ""){
-      const nameCostumer = document.getElementById('idInputNewC').value
+  const fnCreateCostumer= (costumer, state) => {
+    if(costumer !== ""){
+      const nameCostumer = costumer
       const newCostumer = state.costumers
       newCostumer[nameCostumer] = {}
-      fnData('costumers', newCostumer)
-      fnData('sCostumer', nameCostumer)
+      return newCostumer
+    }
+    else{
+      return state.costumers
+    }
+  }
+
+  const fnPushBtnCreateCostumer = () =>{
+    const input = document.getElementById('idInputNewC').value
+    if(input !== ""){
+      fnData('costumers', fnCreateCostumer(input, state))
+      fnData('sCostumer', input)
       document.getElementById('idInputNewC').value = ""
       setinputCostumer(false)
     }
+    
+
   }
 
   const fnShowNewCostumer= () => {
@@ -47,7 +59,7 @@ export function MenuS({state, fnData}) {
       </div>
       <div className='cMenuSD'>
         {inputCostumer && <input key={uuidv4()} type="text" id='idInputNewC' placeholder="Name of Costumer"/> }
-        {inputCostumer && <button key={uuidv4()} onClick={fnCreateOrder}  id='addNewC' className='cButtonType00'>Add Costumer</button> }
+        {inputCostumer && <button key={uuidv4()} onClick={fnPushBtnCreateCostumer}  id='addNewC' className='cButtonType00'>Add Costumer</button> }
         {!state.user.log && <button key={uuidv4()} onClick={fnShowMenuLogIn} id='idBtnLogIn' className='cButtonType00'>LogIn</button> }
         {state.user.log && <button key={uuidv4()} onClick={fnShowNewCostumer} id='idBtnCreateOrder' className='cButtonType00'>Creat Order</button> }
        

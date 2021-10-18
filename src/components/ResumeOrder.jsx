@@ -15,22 +15,26 @@ export function ResumeOrder({state}) {
    }
 
   return (
-    <div key={uuidv4()} id="idResumeOrder" className="cResumeOrder">
+    <div key="djdjdjdj" id="idResumeOrder" className="cResumeOrder">
         <div key={uuidv4()} className="cContournResumeOrder">
           <p key={uuidv4()} className="cFontTypeTitleM" >_Resume_Order_ {state.sCostumer}</p>
+
           <table className="cTableResume cFontTypeTitleS">
+
             <tbody key={uuidv4()}>
               <tr key={uuidv4()}>
-                <th>Dish</th>
-                <th>Quantity</th>
-                <th>Total</th>
+                <th key={uuidv4()}>Dish</th>
+                <th key={uuidv4()}>Quantity</th>
+                <th key={uuidv4()}>Total</th>
               </tr>
 
               {costumerArray.map( element => {
-                return <React.Fragment>
-                  <tr key={uuidv4()}> <td>{element[0]}</td> <td>{element[1].quantity}</td> <td>{element[1].price}</td></tr></React.Fragment>
+                console.log(element[0], element[1].quantity, element[1].price)
+                return <tr key={uuidv4()}><td key={uuidv4()}>{element[0]}</td><td key={uuidv4()}>{element[1].quantity}</td><td key={uuidv4()}>{element[1].price}</td></tr>
               })}
+
             </tbody>
+            
           </table>
 
           
