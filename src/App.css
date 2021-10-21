@@ -24,7 +24,7 @@
 
 .cImgLogo{
   height: 90%;
-  
+  margin-right: 20px;
 }
 
 .cMenuSI{
@@ -199,6 +199,18 @@ height: 90%;
   text-align: center;
 }
 
+.cTableResume tfoot td:nth-child(2){
+  text-align: center;
+  border-top: 5px solid black;
+  width: 30%;
+}
+
+.cTableResume tfoot td:nth-child(3){
+  width: 30%;
+  text-align: center;
+  border-top: 5px solid black;
+}
+
 .cResumeOrder{
   height: 90%;
 }
@@ -215,7 +227,20 @@ height: 90%;
   border-radius: 15px;
 }
 
+.cTotalResume{
+  display: flex;
+  justify-content: right;
+  width: 90%;
+  margin-top: 30px;
+}
 
+.cTotalResume div{
+  border-top: 5px solid black;
+}
+
+
+
+/*Menu Inferior/////////////////////////////////////*/
 
 .cMenuD{
   position: fixed;
@@ -241,8 +266,9 @@ height: 90%;
   border-radius: 10px;
   background-color: #24221b;
   text-shadow: 1px 1px 6px #000;
-  margin-right: 10px;
+  margin: 10px;
   padding: 10px;
+  width: 100%;
 }
 
 .cButtonType03{
@@ -259,17 +285,24 @@ height: 90%;
 .cFontTypeTitleS{
   color: black;
   font-weight: bold;
-  text-shadow: 1px 1px 6px #000;
+  text-shadow: 1px 1px 4px #000;
   font-size: 1.3em;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-seriff;
 }
 
 .cFontTypeTitleM{
   color: white;
-  -webkit-text-stroke: 2px black;
   font-weight: bold;
   text-shadow: 1px 1px 6px #000;
-  font-size: 2.5em;
+  font-size: 1.5em;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-seriff;
+}
+
+.cFontTypeTitleSB{
+  color: black;
+  font-weight: bolder;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.4em;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-seriff;
 }
 

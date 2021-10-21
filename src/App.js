@@ -4,18 +4,17 @@ import {MenuD} from './components/MenuD'
 import {React, useState}  from 'react'  
 import {menulist} from './data/listmenu'
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [state, setState] = useState({
     user :{log: true, name:'No User Log'},
     menu: menulist,
-    costumers: {
-     
-        
-
-    },
+    costumers: {},
     sCostumer: ""
   })
+
+  
 
   const fnData = (data, value, costumer) => {
     console.log("Data =>", data, "Value =>", value)
@@ -37,9 +36,12 @@ function App() {
       })
       break
       case 'sCostumer': setState({
-        ...state,sCostumer: value
+        ...state,
+        sCostumer: value,
         
       })
+      
+
       break
       case 'changCostumer': setState({
         ...state,
@@ -56,9 +58,9 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <MenuS state = {state} fnData = {fnData}/>
-      <ContentPage state = {state} fnData = {fnData}/>
+    <div key={uuidv4()} className="App">
+      <MenuS key={uuidv4()} state = {state} fnData = {fnData}/>
+      <ContentPage key={uuidv4()} state = {state} fnData = {fnData}/>
       <MenuD/>
 
     </div>

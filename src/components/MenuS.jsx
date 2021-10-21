@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 export function MenuS({state, fnData}) {
 
   const [inputCostumer, setinputCostumer] = useState(false)
-
   const fnShowMenuLogIn = () => {
     document.getElementById('idLogIn').style.display = "block";
   }
@@ -14,9 +13,12 @@ export function MenuS({state, fnData}) {
     if(document.getElementById('idInputNewC').value !== ""){
       const nameCostumer = document.getElementById('idInputNewC').value
       const newCostumer = state.costumers
-      newCostumer[nameCostumer] = {}
-      fnData('costumers', newCostumer)
+      console.log(Object.keys(state.menu)[0])
+      newCostumer[nameCostumer] = {menuSelected: Object.keys(state.menu)[0]}
+      //fnData('costumers', newCostumer)
       fnData('sCostumer', nameCostumer)
+
+      //state = {state, sCostumer: nameCostumer}
       document.getElementById('idInputNewC').value = ""
       setinputCostumer(false)
     }
@@ -32,7 +34,7 @@ export function MenuS({state, fnData}) {
   }
 
   
-  console.log(Object.entries(state.costumers))
+  //console.log(Object.entries(state.costumers))
   
 
   return (
@@ -46,10 +48,10 @@ export function MenuS({state, fnData}) {
         }
       </div>
       <div className='cMenuSD'>
-        {inputCostumer && <input key={uuidv4()} type="text" id='idInputNewC' placeholder="Name of Costumer"/> }
+        {inputCostumer && <input key={uuidv4()} type="text" id='idInputNewC' placeholder="Name of Costumer" /> }
         {inputCostumer && <button key={uuidv4()} onClick={fnCreateOrder}  id='addNewC' className='cButtonType00'>Add Costumer</button> }
         {!state.user.log && <button key={uuidv4()} onClick={fnShowMenuLogIn} id='idBtnLogIn' className='cButtonType00'>LogIn</button> }
-        {state.user.log && <button key={uuidv4()} onClick={fnShowNewCostumer} id='idBtnCreateOrder' className='cButtonType00'>Creat Order</button> }
+        {(state.user.log && Object.keys(state.costumers).length < 5) && <button key={uuidv4()} onClick={fnShowNewCostumer} id='idBtnCreateOrder' className='cButtonType00'>Creat Order</button> }
        
       </div>
             

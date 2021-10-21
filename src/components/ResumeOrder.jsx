@@ -4,34 +4,54 @@ import { v4 as uuidv4 } from 'uuid';
 export function ResumeOrder({state}) {
 
   
-   console.log(state.costumers,state.sCostumer)
+   console.log("1", state.costumers, "2",state)
    //const costumerArray = Object.entries(state.costumers.find(element => element.name === state.sCostumer))
-   console.log(Object.entries(state.costumers).length)
+   //console.log(Object.entries(state.costumers).length)
    let costumerArray = []
+   let totalCost = 0
    if(Object.entries(state.costumers).length >= 1){
+   costumerArray = ["","no entries"]
    costumerArray = Object.entries(state.costumers).find(element => element[0] === state.sCostumer)
    costumerArray =  Object.entries(costumerArray[1])
-   console.log(costumerArray)
+   
+   costumerArray.forEach(element =>{
+    totalCost += element[1].quantity * element[1].price
+   })
    }
 
   return (
     <div key={uuidv4()} id="idResumeOrder" className="cResumeOrder">
         <div key={uuidv4()} className="cContournResumeOrder">
-          <p key={uuidv4()} className="cFontTypeTitleM" >_Resume_Order_ {state.sCostumer}</p>
-          <table className="cTableResume cFontTypeTitleS">
-            <tbody key={uuidv4()}>
-              <tr key={uuidv4()}>
+          <p key={uuidv4()} className="cFontTypeTitleM" >Resume {state.sCostumer}</p>
+          <table key={uuidv4()} className="cTableResume cFontTypeTitleS">
+            <thead>
+              <tr>
                 <th>Dish</th>
-                <th>Quantity</th>
-                <th>Total</th>
+                <th>Qty</th>
+                <th>Price</th>
               </tr>
-
+            </thead>
+            <tbody>
               {costumerArray.map( element => {
-                return <React.Fragment>
-                  <tr key={uuidv4()}> <td>{element[0]}</td> <td>{element[1].quantity}</td> <td>{element[1].price}</td></tr></React.Fragment>
+                return <React.Fragment key={uuidv4()}>
+                  <tr>
+                    <td>{element[0]}</td>
+                    <td>{element[1].quantity}</td>
+                    <td>{"$"+element[1].price}</td>
+                  </tr></React.Fragment>
               })}
             </tbody>
-          </table>
+            </table>
+           
+              {(costumerArray.length > 0) && <React.Fragment key={uuidv4()}>
+                <div className="cTotalResume">
+                  <div>
+                   <p className="cFontTypeTitleSB"> Total = {"$"+totalCost} </p> 
+                  </div>
+                </div> 
+               </React.Fragment>}
+            
+          
 
           
           

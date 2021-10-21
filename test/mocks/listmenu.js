@@ -1,11 +1,11 @@
 export const menulist = {
-    "Breakfast": {
+    "breakfast": {
         "American Coffee": {"price": 5},
         "Coffe with milk": {"price": 7},
         "Sandwitch with ham and cheese": {"price": 10},
         "Juice of Fruits Natural": {"price": 7}
     },
-    "Lunck": {
+    "diner": {
         "Burger": {"price": 10, "type": ["Beef","Chiken","Vgetarian"]},
         "Double Burger ": {"price": 15, "type": ["Beef","Chiken","Vgetarian"]},
         "Potato Chips": {"price": 5},
