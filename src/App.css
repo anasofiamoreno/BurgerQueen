@@ -1,38 +1,432 @@
-.App {
+:root {
+  --main-bg-color: brown;
+}
+
+.cNoEvent {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.cDoEvent {
+  pointer-events: all;
+  opacity: 1;
+}
+
+/*Menu Superior/////////////////////////////////////*/
+
+.cMenuSWithEvents {
+  position: fixed;
+  top: 0%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 10%;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  background-color: #24221b;
+  pointer-events: all;
+  opacity: 1;
+}
+.cMenuSWithoutEvents {
+  position: fixed;
+  top: 0%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 10%;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  background-color: #24221b;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.cImgLogo {
+  height: 90%;
+  margin-right: 20px;
+}
+
+.cMenuSI {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 100%;
+  margin-left: 1%;
+}
+
+.cMenuSD {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1%;
+}
+
+/*Content/////////////////////////////////////*/
+
+.cContentP {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  top: 10%;
+  width: 100%;
+  height: 85%;
+  background-color: rgba(36, 34, 27, 0.62);
+}
+
+p {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+#idLogIn {
+  display: none;
+}
+
+.cFormLogIn {
+  display: flex;
+  position: fixed;
+  top: 11%;
+  right: 1%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: auto;
+  width: fit-content;
+  padding: 0em 2em 1em 2em;
+  background-image: url("./img/wrn.jpg");
+  background-size: cover;
+  border-radius: 10px;
+}
+
+.cImgBack {
+  height: 50%;
+  display: block;
+  margin: auto;
+}
+
+.cMenuBQ {
+  height: 90%;
+}
+
+.cContournMenuWithEvents {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+  min-height: 80%;
+  margin: 1%;
+  background-image: url("./img/burgerbackground.jpeg");
+  /*background-size: contain;*/
+  border-radius: 15px;
+  pointer-events: all;
+  opacity: 1;
+}
+.cContournMenuWithoutEvents {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+  min-height: 80%;
+  margin: 1%;
+  background-image: url("./img/burgerbackground.jpeg");
+  /*background-size: contain;*/
+  border-radius: 15px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.cContournMenuSup {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cContournMenuDow {
+  width: 98%;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cContournMenuByItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.cTable {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+
+  text-align: left;
+}
+
+.cTable th:nth-child(1) {
+  width: 50%;
+}
+
+.cTable th:nth-child(2) {
+  width: 20%;
+}
+.cTable th:nth-child(3) {
+  width: 30%;
+}
+
+.cTable td:nth-child(1) {
+  text-align: left;
+  padding-left: 1em;
+}
+
+.cTable th:nth-child(1) {
+  text-align: left;
+  padding-left: 2em;
+}
+.cTable th:nth-child(2) {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.cTable td:nth-child(2) {
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.cTableResume {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.cTableResume th:nth-child(1) {
+  width: 60%;
+  padding-left: 2em;
+}
+
+.cTableResume th:nth-child(2) {
+  width: 20%;
+  text-align: center;
+}
+.cTableResume th:nth-child(3) {
+  width: 20%;
+  text-align: center;
+}
+
+.cTableResume td:nth-child(1) {
+  text-align: left;
+  padding-left: 1em;
+}
+
+.cTableResume td:nth-child(2) {
+  text-align: center;
+}
+
+.cTableResume td:nth-child(3) {
+  text-align: center;
+}
+
+.cTableResume tfoot td:nth-child(2) {
+  text-align: center;
+  border-top: 5px solid black;
+  width: 30%;
+}
+
+.cTableResume tfoot td:nth-child(3) {
+  width: 30%;
+  text-align: center;
+  border-top: 5px solid black;
+}
+
+.cTableResume tbody {
+  padding-top: 10px;
+  border-top: 5px solid black;
+}
+
+.cResumeOrder {
+  height: 90%;
+}
+
+.cContournResumeOrder {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  flex-direction: column;
+  min-width: 200px;
+  min-height: 80%;
+  margin: 10px;
+  background-image: url("./img/burgerbackground.jpeg");
+  border-radius: 15px;
+}
+
+.cTotalResume {
+  display: flex;
+  justify-content: right;
+  width: 95%;
+  margin-top: 30px;
+}
+
+.cTotalResume div {
+  border-top: 5px solid black;
+}
+
+/*Menu Inferior/////////////////////////////////////*/
+
+.cMenuD {
+  position: fixed;
+  top: 95%;
+  width: 100%;
+  height: 5%;
+  background-color: #24221b;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.cMakeOrder {
+  width: 100%;
+}
+
+/*Buttons/////////////////////////////////////*/
+
+.cButtonType00 {
+  border-radius: 5px;
+  background-color: #dba42b;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+
+.cButtonType01 {
+  border-radius: 10px;
+  background-color: #24221b;
+  text-shadow: 1px 1px 6px #000;
+  margin: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.cButtonType03 {
+  border-radius: 5px;
+  background-color: #dba42b;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 100%;
+  width: 40%;
+}
+
+.cButtonTypeMkOr {
+  border-bottom-left-radius: 15px;
+  border-style: none;
+  background-color: #24221b;
+  text-shadow: 1px 1px 6px #000;
+  padding: 10px;
+  width: 80%;
+}
+.cButtonTypeClOr {
+  border-bottom-right-radius: 15px;
+  border-style: none;
+  background-color: red;
+  text-shadow: 1px 1px 6px #000;
+  padding: 10px;
+  width: 20%;
+}
+
+.cButtonTypeConfirmOr {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background-color: green;
+  text-shadow: 1px 1px 6px #000;
+  padding: 10px;
+  margin: 0px;
+}
+.cButtonTypeBackOr {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: black;
+  text-shadow: 1px 1px 6px #000;
+  padding: 10px;
+  margin: 0px;
+}
+
+/*Fonts/////////////////////////////////////*/
+
+.cFontTypeTitleS {
+  color: black;
+  font-weight: bold;
+  text-shadow: 1px 1px 4px #000;
+  font-size: 1.3em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+
+.cFontTypeTitleS_White {
   color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 4px #000;
+  font-size: 1.3em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
 }
 
-.App-link {
-  color: #61dafb;
+.cFontTypeTitleM {
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.8em;
+  font-family: "Lucida Sans", Geneva, Verdana, sans-seriff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cFontTypeTitleSB {
+  color: black;
+  font-weight: bolder;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.4em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+
+.cFontTypeTextS {
+  color: black;
+  font-weight: bolder;
+  text-shadow: 1px 1px 1px #000;
+  font-size: 1.3em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+.cFontTypeTextSB {
+  color: black;
+  font-weight: bolder;
+  text-shadow: 1px 1px 1px #000;
+  font-size: 1.4em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+
+/*Inputs/////////////////////////////////////*/
+
+.cInputType00 {
+  color: black;
+  font-size: 1.3em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+
+.cInputType00::placeholder {
+  color: #dba32b8a;
+  font-size: 1.1em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Sans Unicode",
+    Geneva, Verdana, sans-seriff;
 }
