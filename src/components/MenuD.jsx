@@ -29,14 +29,17 @@ export function MenuD({ state, fnData }) {
         <p className="cFontTypeTitleS_White">{state.user.name}</p>
       </div>
       <div className="cMenuSD">
-        <button className="cButtonType00">Setting</button>
-        <button className="cButtonType00" onClick={makeLogOut}>
-          Log Out
-        </button>
-        <div className="cFontTypeTitleS_White">
-          <input type="checkbox" id="serv1" value="servFB" /> Server FireBase
-          <input type="checkbox" id="serv2" value="servLocal" /> Server Local
-        </div>
+        {state.user.log && (
+          <button className="cButtonType00" onClick={makeLogOut}>
+            Log Out
+          </button>
+        )}
+        {state.user.type === "admin" && (
+          <div className="cFontTypeTitleS_White">
+            <input type="checkbox" id="serv1" value="servFB" /> Server FireBase
+            <input type="checkbox" id="serv2" value="servLocal" /> Server Local
+          </div>
+        )}
       </div>
     </div>
   );

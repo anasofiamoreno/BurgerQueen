@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   getFirestore,
@@ -7,38 +7,45 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
+import { set, ref, getDatabase, get, onValue, update } from "firebase/database";
 
 export function ResumeOrder({ state, fnData, classState }) {
-  const [orderInProgress, setOrderInProgress] = useState("");
+  const [orderInProgress, setOrderInProgress] = useState(0);
 
-  const db = getFirestore();
-  console.log("1", state.costumers, "2", state);
-  //const costumerArray = Object.entries(state.costumers.find(element => element.name === state.sCostumer))
-  //console.log(Object.entries(state.costumers).length)
   let costumerArray = [];
   let totalCost = 0;
+  const db = getFirestore();
+  const setdb = getDatabase();
+
   if (Object.entries(state.costumers).length >= 1) {
     costumerArray = ["", "no entries"];
     costumerArray = Object.entries(state.costumers).find(
       (element) => element[0] === state.sCostumer
     );
     costumerArray = Object.entries(costumerArray[1]);
-    console.log(costumerArray);
     costumerArray.forEach((element) => {
       element[0] !== "menuSelected" &&
         (totalCost += element[1].quantity * element[1].price);
     });
   }
-  const jj = async () => {
-    const temp = await getDoc(doc(db, state.user.name, state.sCostumer));
-    if (temp.exists()) {
-      setOrderInProgress(temp.data());
-    }
 
-    console.log(orderInProgress);
+  const fnOrderInProgress = async () => {
+    const starCountRef = ref(
+      setdb,
+      "orders/" +
+        state.user.name.slice(0, 1 + state.user.name.search("@")) +
+        "/" +
+        state.sCostumer
+    );
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log(data);
+      if (data != null) setOrderInProgress(Object.keys(data).length);
+    });
   };
-  if (orderInProgress === "") {
-    jj();
+
+  if (orderInProgress === 0) {
+    fnOrderInProgress();
   }
 
   const fnSendOrderToServer = () => {
@@ -46,14 +53,35 @@ export function ResumeOrder({ state, fnData, classState }) {
   };
 
   const fnConfirm = async () => {
-    if (orderInProgress.length === 0) {
-      await setDoc(doc(db, state.user.name, state.sCostumer), {
-        [uuidv4().slice(0, 8)]: state.costumers[state.sCostumer],
-      });
+    if (orderInProgress == 0) {
+      console.log("if", orderInProgress);
+      await set(
+        ref(
+          setdb,
+          "orders/" +
+            state.user.name.slice(0, 1 + state.user.name.search("@")) +
+            "/" +
+            state.sCostumer
+        ),
+        {
+          [uuidv4().slice(0, 8)]: state.costumers[state.sCostumer],
+        }
+      );
     } else {
-      await updateDoc(doc(db, state.user.name, state.sCostumer), {
+      console.log("else", orderInProgress);
+      const nesOrder = {
         [uuidv4().slice(0, 8)]: state.costumers[state.sCostumer],
-      });
+      };
+      const updates = {};
+      updates[
+        "orders/" +
+          state.user.name.slice(0, 1 + state.user.name.search("@")) +
+          "/" +
+          state.sCostumer +
+          "/" +
+          [uuidv4().slice(0, 8)]
+      ] = state.costumers[state.sCostumer];
+      await update(ref(setdb), updates);
     }
 
     let items = state.costumers[state.sCostumer];
@@ -71,7 +99,9 @@ export function ResumeOrder({ state, fnData, classState }) {
     const newCostumer = state.costumers;
     delete newCostumer[state.sCostumer];
     console.log(newCostumer);
-    newCostumer[state.sCostumer] = { menuSelected: Object.keys(state.menu)[0] };
+    newCostumer[state.sCostumer] = {
+      menuSelected: Object.keys(state.menu)[0],
+    };
     fnData("delCostumers", newCostumer);
   };
 
@@ -79,7 +109,7 @@ export function ResumeOrder({ state, fnData, classState }) {
     <div key={uuidv4()} id="idResumeOrder" className="cResumeOrder">
       <div key={uuidv4()} className="cContournResumeOrder">
         <div>
-          <p key={uuidv4()} className="cFontTypeTitleM">
+          <p key={uuidv4()} className="cFontTypeTitleMB">
             Resume {state.sCostumer}
           </p>
           <table key={uuidv4()} className="cTableResume cFontTypeTextS">
@@ -117,10 +147,10 @@ export function ResumeOrder({ state, fnData, classState }) {
             </React.Fragment>
           )}
         </div>
-        {Object.keys(orderInProgress).length > 0 && (
+        {orderInProgress > 0 && (
           <div>
             <p>Orders In Progress</p>
-            <p>{Object.keys(orderInProgress).length}</p>
+            <p>{orderInProgress}</p>
           </div>
         )}
 

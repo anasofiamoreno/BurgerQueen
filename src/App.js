@@ -7,15 +7,16 @@ import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query, getDoc, doc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
+import { getDatabase, ref, onValue} from "firebase/database";
 
 
 
 function App(){
 
   const [state, setState] = useState({
-    user :{log: false, name:''},
+    user :{log: false, name:'', type: ""},
     menu: menulist,
     costumers: {},
     sCostumer: "",
@@ -27,6 +28,8 @@ function App(){
     MenuS:"cMenuSWithEvents",
     Button: "cDoEvent",
   })
+
+  const [orders, setOrders] = useState({})
 
   useEffect((setState) => {
 
@@ -42,17 +45,62 @@ function App(){
     initializeApp(firebaseConfig);
     const db = getFirestore();
     const auth = getAuth()
+    const realDB = getDatabase()
 
     onAuthStateChanged(auth, async (user) => {
       if (user)  {
+        let type = ""
+
+        await getDoc(doc(db,"validUsers", user.email)).then((doc) => {
+          type = doc.data().type
+        })
+  
        
-        const Docs = await getDocs(query(collection(db,user.email)))  
-        const newCostumer = state.costumers;
-        Docs.forEach((doc) => {
-          newCostumer[doc.id] = { menuSelected: Object.keys(state.menu)[0] };
-        });
+        switch(type){
+          case "admin":
+            break
+          case "waiter":
+            //const DocsCostumers = await getDocs(query(collection(db,user.email)))  
+            const newCostumer = state.costumers;
+            
+            
+
+
+            onValue(ref(realDB, "orders/waiter@" ), (snapshot) => {
+              const data = snapshot.val();
+              Object.keys(data).forEach((doc) => {
+                newCostumer[doc] = { menuSelected: Object.keys(state.menu)[0] };
+                });
+                fnData("logIn", true, user.email, Object.keys(state.costumers)[0] ? Object.keys(state.costumers)[0] : "", type);
+            });
+
+            
+
+            break
+          case "kitchen":
+            const DocsOrders = await getDocs(query(collection(db,"waiter@bqueen.com")))  
+            const newOrders = orders;
+
+            onValue(ref(realDB, "orders/waiter@" ), (snapshot) => {
+              const data = snapshot.val();
+              setOrders(data)
+            });
+
+
+
+            fnData("logIn", true, user.email, "", type);
+
+            const getdb = getDatabase();
+            const starCountRef = ref(getdb, 'usuarios/' + "Ana");
+            onValue(starCountRef, (snapshot) => {
+              const data = snapshot.val();
+              console.log(data)
+            });
+
+            break
+          default:
+        }
         
-        fnData("log", true, user.email, Object.keys(state.costumers)[0] ? Object.keys(state.costumers)[0] : "");
         
         
       } else {
@@ -63,16 +111,16 @@ function App(){
 
   },[state.user.log])
 
-  const fnData = (data, value, costumer, x) => {
-    console.log("Data =>", data, "Value =>", value, "Costumer=>", costumer)
+  const fnData = (data, value, costumer, x, y) => {
 
     switch(data) {
-      case 'log': setState({
+      case 'logIn': setState({
         ...state,
         user: {
           ...state.user,
           log: value,
-          name: costumer
+          name: costumer,
+          type: y,
         },
         sCostumer: x,
       })
@@ -155,7 +203,7 @@ function App(){
 
     <div key={uuidv4()} className="App">
       <MenuS key={uuidv4()} state = {state} fnData = {fnData} classState = {classState}/>
-      <ContentPage key={uuidv4()} state = {state} classState = {classState} fnData = {fnData}/>
+      <ContentPage key={uuidv4()} state = {state} classState = {classState} fnData = {fnData} orders = {orders}/>
       <MenuD state = {state} fnData = {fnData}/>
     </div>
     

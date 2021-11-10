@@ -19,7 +19,7 @@ export function LogIn({ fnData }) {
       .then((userCredential) => {
         const user = userCredential.user;
 
-        fnData("log", true, user.email, "");
+        fnData("logIn", true, user.email, "", "");
         //fnData("log", true);
         //fnData("log", true, user.email);
       })
