@@ -39,7 +39,6 @@ export function ResumeOrder({ state, fnData, classState }) {
     );
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
       if (data != null) setOrderInProgress(Object.keys(data).length);
     });
   };
@@ -53,8 +52,10 @@ export function ResumeOrder({ state, fnData, classState }) {
   };
 
   const fnConfirm = async () => {
+    var fecha = Date.now();
+    let tempOrder = state.costumers[state.sCostumer];
+    tempOrder.date = fecha;
     if (orderInProgress == 0) {
-      console.log("if", orderInProgress);
       await set(
         ref(
           setdb,
@@ -64,11 +65,10 @@ export function ResumeOrder({ state, fnData, classState }) {
             state.sCostumer
         ),
         {
-          [uuidv4().slice(0, 8)]: state.costumers[state.sCostumer],
+          [uuidv4().slice(0, 8)]: tempOrder,
         }
       );
     } else {
-      console.log("else", orderInProgress);
       const nesOrder = {
         [uuidv4().slice(0, 8)]: state.costumers[state.sCostumer],
       };
@@ -80,7 +80,8 @@ export function ResumeOrder({ state, fnData, classState }) {
           state.sCostumer +
           "/" +
           [uuidv4().slice(0, 8)]
-      ] = state.costumers[state.sCostumer];
+      ] = tempOrder;
+
       await update(ref(setdb), updates);
     }
 
@@ -98,7 +99,6 @@ export function ResumeOrder({ state, fnData, classState }) {
   const fnClear = () => {
     const newCostumer = state.costumers;
     delete newCostumer[state.sCostumer];
-    console.log(newCostumer);
     newCostumer[state.sCostumer] = {
       menuSelected: Object.keys(state.menu)[0],
     };
