@@ -78,16 +78,18 @@ export function MenuS({ state, fnData, classState }) {
             LogIn
           </button>
         )}
-        {state.user.log && Object.keys(state.costumers).length < 5 && (
-          <button
-            key={uuidv4()}
-            onClick={fnShowNewCostumer}
-            id="idBtnCreateOrder"
-            className="cButtonType00"
-          >
-            Creat Order
-          </button>
-        )}
+        {state.user.log &&
+          state.user.type === "waiter" &&
+          Object.keys(state.costumers).length < 5 && (
+            <button
+              key={uuidv4()}
+              onClick={fnShowNewCostumer}
+              id="idBtnCreateOrder"
+              className="cButtonType00"
+            >
+              Creat Order
+            </button>
+          )}
       </div>
     </div>
   );
