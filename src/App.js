@@ -83,6 +83,7 @@ function App(){
 
             onValue(ref(realDB, "orders/waiter@" ), (snapshot) => {
               const data = snapshot.val();
+              console.log(data)
               setOrders(data)
             });
 

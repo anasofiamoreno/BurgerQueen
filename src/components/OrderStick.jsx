@@ -3,6 +3,7 @@ import React from "react";
 
 export function OrderStick({ name, order }) {
   delete order.menuSelected;
+  //delete order.date;
   useEffect(() => {
     let ordersArray = Object.keys(order);
     console.log(ordersArray);
