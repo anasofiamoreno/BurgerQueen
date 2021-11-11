@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import React from "react";
 
 export function OrderStick({ name, order }) {
-  delete order.menuSelected;
+  //delete order.menuSelected;
   //delete order.date;
+  console.log(order);
   useEffect(() => {
     let ordersArray = Object.keys(order);
     console.log(ordersArray);

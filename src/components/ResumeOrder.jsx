@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import { set, ref, getDatabase, get, onValue, update } from "firebase/database";
 
-export function ResumeOrder({ state, fnData, classState }) {
+export function ResumeOrder({ state, fnData, classState, userState }) {
   const [orderInProgress, setOrderInProgress] = useState(0);
 
   let costumerArray = [];
@@ -22,7 +22,8 @@ export function ResumeOrder({ state, fnData, classState }) {
     costumerArray = Object.entries(state.costumers).find(
       (element) => element[0] === state.sCostumer
     );
-    costumerArray = Object.entries(costumerArray[1]);
+    console.log(costumerArray);
+    costumerArray = Object.entries(costumerArray[1].orders);
     costumerArray.forEach((element) => {
       element[0] !== "menuSelected" &&
         (totalCost += element[1].quantity * element[1].price);
@@ -39,8 +40,22 @@ export function ResumeOrder({ state, fnData, classState }) {
     );
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
-      if (data != null) setOrderInProgress(Object.keys(data).length);
+      //if (data != null) setOrderInProgress(Object.keys(data).length);
     });
+
+    const docRef = doc(db, "validUsers", userState.name);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log(docSnap.data());
+      if (docSnap.data().costumers[state.sCostumer] != undefined)
+        setOrderInProgress(
+          Object.keys(docSnap.data().costumers[state.sCostumer].orders).length
+        );
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
   };
 
   if (orderInProgress === 0) {
@@ -52,10 +67,23 @@ export function ResumeOrder({ state, fnData, classState }) {
   };
 
   const fnConfirm = async () => {
-    var fecha = Date.now();
+    const date = Date.now();
+    const nOrder = uuidv4().slice(0, 8);
+
     let tempOrder = state.costumers[state.sCostumer];
-    tempOrder.date = fecha;
+    tempOrder.date = date;
     if (orderInProgress == 0) {
+      const washingtonRef = doc(db, "validUsers", userState.name);
+
+      // Set the "capital" field of the city 'DC'
+      await updateDoc(washingtonRef, {
+        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".items"]:
+          state.costumers[state.sCostumer].orders,
+
+        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".date"]:
+          date,
+      });
+
       await set(
         ref(
           setdb,
@@ -70,8 +98,20 @@ export function ResumeOrder({ state, fnData, classState }) {
       );
     } else {
       const nesOrder = {
-        [uuidv4().slice(0, 8)]: state.costumers[state.sCostumer],
+        [uuidv4().slice(0, 8)]: state.costumers[state.sCostumer].orders,
       };
+
+      const washingtonRef = doc(db, "validUsers", userState.name);
+
+      // Set the "capital" field of the city 'DC'
+      await updateDoc(washingtonRef, {
+        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".items"]:
+          state.costumers[state.sCostumer].orders,
+
+        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".date"]:
+          date,
+      });
+
       const updates = {};
       updates[
         "orders/" +
@@ -86,7 +126,7 @@ export function ResumeOrder({ state, fnData, classState }) {
     }
 
     let items = state.costumers[state.sCostumer];
-    items = { menuSelected: state.costumers[state.sCostumer].menuSelected };
+    items.orders = {};
     fnData("changCostumer", items);
 
     fnData("doEvents");
@@ -98,11 +138,9 @@ export function ResumeOrder({ state, fnData, classState }) {
 
   const fnClear = () => {
     const newCostumer = state.costumers;
-    delete newCostumer[state.sCostumer];
-    newCostumer[state.sCostumer] = {
-      menuSelected: Object.keys(state.menu)[0],
-    };
-    fnData("delCostumers", newCostumer);
+    newCostumer[state.sCostumer].orders = {};
+    fnData("render");
+    //fnData("delCostumers", newCostumer);
   };
 
   return (

@@ -2,7 +2,7 @@ import { React } from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-export function LogIn({ fnData }) {
+export function LogIn({ fnData, userStates }) {
   const firebaseConfig = {
     apiKey: "AIzaSyA1EUw7Yp4Z2O-wl7MqyV9zTc2tPZB5z0w",
     authDomain: "burgerqueendb-3614e.firebaseapp.com",
@@ -17,11 +17,12 @@ export function LogIn({ fnData }) {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        console.log(userCredential);
         const user = userCredential.user;
-
-        fnData("logIn", true, user.email, "", "");
-        //fnData("log", true);
-        //fnData("log", true, user.email);
+        const tempUserState = userStates;
+        tempUserState.log = true;
+        tempUserState.name = user.email;
+        //fnData("logIn", true, user.email, "", "");
       })
       .catch((error) => {
         fnData("user", "No Loged");

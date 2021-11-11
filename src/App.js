@@ -7,7 +7,7 @@ import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, getDocs, query, getDoc, doc } from "firebase/firestore";
+import { collection, getDocs, query, getDoc, doc, onSnapshot } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { getDatabase, ref, onValue} from "firebase/database";
 
@@ -23,6 +23,8 @@ function App(){
     chekedLog: false,
   })
 
+  const[userState, setUserState] = useState({log: false, name:'', type: ""})
+
   const [classState, setClass] = useState({
     MenuBQ:"cContournMenuWithEvents",
     MenuS:"cMenuSWithEvents",
@@ -31,7 +33,7 @@ function App(){
 
   const [orders, setOrders] = useState({})
 
-  useEffect((setState) => {
+  useEffect(() => {
 
     const firebaseConfig = {
       apiKey: "AIzaSyA1EUw7Yp4Z2O-wl7MqyV9zTc2tPZB5z0w",
@@ -47,25 +49,54 @@ function App(){
     const auth = getAuth()
     const realDB = getDatabase()
 
+    
+
     onAuthStateChanged(auth, async (user) => {
       if (user)  {
         let type = ""
+        console.log(user)
 
         await getDoc(doc(db,"validUsers", user.email)).then((doc) => {
-          type = doc.data().type
+          let tempUser = userState
+          tempUser.type = doc.data().status.type
+          tempUser.name = user.email
+          tempUser.log = true
+          
+          //setUserState({...userState, log:true, name:user.email, type: doc.data().status.type})
         })
+
+ 
   
        
-        switch(type){
+        switch(userState.type){
           case "admin":
             break
           case "waiter":
-            //const DocsCostumers = await getDocs(query(collection(db,user.email)))  
-            const newCostumer = state.costumers;
+           
+            
+
+            onSnapshot(doc(db, "validUsers", user.email, ), (doc) => {
+              const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+              const newCostumer = state.costumers
+              const newSCostumer = state
+              Object.keys(doc.data().costumers).forEach((costumer,i) => {
+                if(i === 0 ){
+                  newSCostumer.sCostumer = costumer
+                }
+                console.log(doc.data().costumer)
+                newCostumer[costumer] = {menuSelected: Object.keys(state.menu)[0], orders:{}}
+              })
+              fnData("render")
+              
+            });
+
+
+            
+            
             
             
 
-
+/*
             onValue(ref(realDB, "orders/waiter@" ), (snapshot) => {
               const data = snapshot.val();
               Object.keys(data).forEach((doc) => {
@@ -74,17 +105,34 @@ function App(){
                 fnData("logIn", true, user.email, Object.keys(state.costumers)[0] ? Object.keys(state.costumers)[0] : "", type);
             });
 
-            
+            */
 
             break
           case "kitchen":
+
+
+            onSnapshot(doc(db, "validUsers", "waiter@bqueen.com", ), (doc) => {
+              const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+              //const newCostumer = state.costumers
+              //const newSCostumer = state
+              Object.keys(doc.data().costumers).forEach((costumer,i) => {
+                if(i === 0 ){
+                  //newSCostumer.sCostumer = costumer
+                }
+                setOrders(doc.data().costumers)
+                //newCostumer[costumer] = {menuSelected: Object.keys(state.menu)[0], orders:{}}
+              })
+              //fnData("render")
+              
+            });
+          
             const DocsOrders = await getDocs(query(collection(db,"waiter@bqueen.com")))  
             const newOrders = orders;
 
             onValue(ref(realDB, "orders/waiter@" ), (snapshot) => {
               const data = snapshot.val();
               console.log(data)
-              setOrders(data)
+              //setOrders(data)
             });
 
 
@@ -110,7 +158,7 @@ function App(){
     })
 
 
-  },[state.user.log])
+  },[userState])
 
   const fnData = (data, value, costumer, x, y) => {
 
@@ -128,14 +176,10 @@ function App(){
       break
       case 'logOut': setState({
         ...state,
-        user: {
-          ...state.user,
-          log: false,
-          name: ""
-        },
         sCostumer: "",
         costumers : {},
       })
+      setUserState({...userState, log: false, name:"", type:""})
       break
       case 'user': setState({
         ...state,
@@ -193,6 +237,8 @@ function App(){
         chekedLog: true,
       })
       break
+      case 'render': setState({...state, sCostumer: state.sCostumer})
+      break
       default: console.log("Error Data Type to Modify")
     }
 
@@ -203,9 +249,9 @@ function App(){
   return (
 
     <div key={uuidv4()} className="App">
-      <MenuS key={uuidv4()} state = {state} fnData = {fnData} classState = {classState}/>
-      <ContentPage key={uuidv4()} state = {state} classState = {classState} fnData = {fnData} orders = {orders}/>
-      <MenuD state = {state} fnData = {fnData}/>
+      <MenuS key={uuidv4()} state = {state} fnData = {fnData} classState = {classState} userState = {userState}/>
+      <ContentPage key={uuidv4()} state = {state} classState = {classState} fnData = {fnData} orders = {orders} userState = {userState}/>
+      <MenuD state = {state} fnData = {fnData} userState = {userState}/>
     </div>
     
   );
