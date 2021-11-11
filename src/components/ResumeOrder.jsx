@@ -82,6 +82,11 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
 
         ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".date"]:
           date,
+
+        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".state"]:
+          "doing",
+
+        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".time"]: "",
       });
 
       await set(
@@ -110,6 +115,11 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
 
         ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".date"]:
           date,
+
+        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".state"]:
+          "doing",
+
+        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".time"]: "",
       });
 
       const updates = {};

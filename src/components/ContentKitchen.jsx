@@ -10,12 +10,15 @@ export function ContentKitchen({ state, fnData, orders }) {
     let array = [];
     Object.keys(orders).map((costumer) => {
       return Object.keys(orders[costumer].orders).map((order) => {
-        array.push({
-          name: costumer,
-          ordername: order,
-          order: orders[costumer].orders[order].items,
-          date: orders[costumer].orders[order].date,
-        });
+        if (orders[costumer].orders[order].state != "stored")
+          array.push({
+            name: costumer,
+            ordername: order,
+            order: orders[costumer].orders[order].items,
+            date: orders[costumer].orders[order].date,
+            state: orders[costumer].orders[order].state,
+            time: orders[costumer].orders[order].time,
+          });
       });
     });
     console.log(array);
@@ -36,6 +39,9 @@ export function ContentKitchen({ state, fnData, orders }) {
             name={order.name}
             ordername={order.ordername}
             order={order.order}
+            date={order.date}
+            state={order.state}
+            orderTime={order.time}
           />
         );
       })}
