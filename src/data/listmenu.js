@@ -5,7 +5,7 @@ export const menulist = {
         "Sandwitch with ham and cheese": {"price": 10},
         "Juice of Fruits Natural": {"price": 7}
     },
-    "Lunck": {
+    "Lunch": {
         "Burger": {"price": 10, "type": ["Beef","Chiken","Vgetarian"]},
         "Double Burger ": {"price": 15, "type": ["Beef","Chiken","Vgetarian"]},
         "Potato Chips": {"price": 5},

@@ -9,15 +9,16 @@ export function ContentKitchen({ state, fnData, orders }) {
   useEffect(() => {
     let array = [];
     Object.keys(orders).map((costumer) => {
-      return Object.keys(orders[costumer]).map((order) => {
+      return Object.keys(orders[costumer].orders).map((order) => {
         array.push({
           name: costumer,
           ordername: order,
-          order: orders[costumer][order],
-          date: orders[costumer][order].date,
+          order: orders[costumer].orders[order].items,
+          date: orders[costumer].orders[order].date,
         });
       });
     });
+    console.log(array);
 
     array = array.sort((a, b) => {
       return a.date - b.date;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Logo from "../img/logo.png";
 import { v4 as uuidv4 } from "uuid";
 
-export function MenuS({ state, fnData, classState }) {
+export function MenuS({ state, fnData, classState, userState }) {
   const [inputCostumer, setinputCostumer] = useState(false);
   const fnShowMenuLogIn = () => {
     document.getElementById("idLogIn").style.display = "block";
@@ -13,7 +13,10 @@ export function MenuS({ state, fnData, classState }) {
       const nameCostumer = document.getElementById("idInputNewC").value;
       const newCostumer = state.costumers;
       console.log(Object.keys(state.menu)[0]);
-      newCostumer[nameCostumer] = { menuSelected: Object.keys(state.menu)[0] };
+      newCostumer[nameCostumer] = {
+        menuSelected: Object.keys(state.menu)[0],
+        orders: {},
+      };
 
       fnData("setCostumers", newCostumer);
       fnData("sCostumer", nameCostumer);
@@ -68,7 +71,7 @@ export function MenuS({ state, fnData, classState }) {
             Add Costumer
           </button>
         )}
-        {!state.user.log && (
+        {!userState.log && (
           <button
             key={uuidv4()}
             onClick={fnShowMenuLogIn}
@@ -78,8 +81,8 @@ export function MenuS({ state, fnData, classState }) {
             LogIn
           </button>
         )}
-        {state.user.log &&
-          state.user.type === "waiter" &&
+        {userState.log &&
+          userState.type === "waiter" &&
           Object.keys(state.costumers).length < 5 && (
             <button
               key={uuidv4()}

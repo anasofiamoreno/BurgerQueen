@@ -2,7 +2,7 @@ import React from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
 
-export function MenuD({ state, fnData }) {
+export function MenuD({ state, fnData, userState }) {
   const makeLogOut = () => {
     const firebaseConfig = {
       apiKey: "AIzaSyA1EUw7Yp4Z2O-wl7MqyV9zTc2tPZB5z0w",
@@ -26,15 +26,15 @@ export function MenuD({ state, fnData }) {
   return (
     <div id="idMenuD" className="cMenuD">
       <div className="cMenuSI">
-        <p className="cFontTypeTitleS_White">{state.user.name}</p>
+        <p className="cFontTypeTitleS_White">{userState.name}</p>
       </div>
       <div className="cMenuSD">
-        {state.user.log && (
+        {userState.log && (
           <button className="cButtonType00" onClick={makeLogOut}>
             Log Out
           </button>
         )}
-        {state.user.type === "admin" && (
+        {userState.type === "admin" && (
           <div className="cFontTypeTitleS_White">
             <input type="checkbox" id="serv1" value="servFB" /> Server FireBase
             <input type="checkbox" id="serv2" value="servLocal" /> Server Local

@@ -2,23 +2,25 @@ import React from "react";
 
 export function MenuItem({ item, price, state, fnData }) {
   const fnAddItem = (item, price) => {
-    let items = state.costumers[state.sCostumer];
+    let items = state.costumers[state.sCostumer].orders;
     if (items[item] === undefined) {
       items[item] = { quantity: 1, type: false, price: price };
     } else {
       items[item].quantity += 1;
     }
-    fnData("changCostumer", items);
+    //fnData("changCostumer", items);
+    fnData("render");
   };
 
   const fnRemoveItem = () => {
-    let items = state.costumers[state.sCostumer];
+    let items = state.costumers[state.sCostumer].orders;
 
     items[item] && items[item].quantity > 1
       ? (items[item].quantity -= 1)
       : delete items[item];
 
-    fnData("changCostumer", items);
+    //fnData("changCostumer", items);
+    fnData("render");
   };
 
   return (
