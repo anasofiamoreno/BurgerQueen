@@ -3,14 +3,17 @@ import React from "react";
 import { OrderStick } from "./OrderStick";
 import { v4 as uuidv4 } from "uuid";
 
-export function ContentKitchen({ state, fnData, orders }) {
+export function ContentKitchen({ orders }) {
   const [arr, setarr] = useState([]);
 
   useEffect(() => {
     let array = [];
     Object.keys(orders).map((costumer) => {
-      return Object.keys(orders[costumer].orders).map((order) => {
-        if (orders[costumer].orders[order].state != "stored")
+      return Object.keys(orders[costumer].orders).forEach((order) => {
+        if (
+          orders[costumer].orders[order].state === "doing" ||
+          orders[costumer].orders[order].state === "ready"
+        )
           array.push({
             name: costumer,
             ordername: order,
@@ -28,7 +31,7 @@ export function ContentKitchen({ state, fnData, orders }) {
     });
 
     setarr(array);
-  }, []);
+  }, [orders]);
 
   return (
     <div className="cContenteKitchen">

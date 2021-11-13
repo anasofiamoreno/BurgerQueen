@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { MenuBQ } from "./MenuBQ";
 import { ResumeOrder } from "./ResumeOrder";
 import { ContentKitchen } from "./ContentKitchen";
@@ -39,7 +39,7 @@ export function ContentPage({ state, fnData, classState, orders, userState }) {
       )}
 
       {Object.entries(state.costumers).length === 0 &&
-        state.user.log === false && (
+        userState.log === false && (
           <img
             key={uuidv4()}
             className="cImgBack"

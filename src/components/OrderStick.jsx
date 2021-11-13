@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import React from "react";
 import { updateDoc, doc, getFirestore } from "firebase/firestore";
 
@@ -39,8 +38,8 @@ export function OrderStick({ name, order, ordername, date, state, orderTime }) {
   return (
     <div className="cPostick">
       <div>
-        <h3>order #{ordername}</h3>
-        {state == "ready" && <h4>{orderTime}</h4>}
+        <h3>Order #{ordername}</h3>
+        {state === "ready" && <h4>{orderTime}</h4>}
       </div>
       <div>
         <table className="cTablePostick">
@@ -63,12 +62,12 @@ export function OrderStick({ name, order, ordername, date, state, orderTime }) {
         </table>
       </div>
       <div className="cBtnReady">
-        {state == "doing" && (
+        {state === "doing" && (
           <button className="cButtonType04" onClick={fnBtnReady}>
             Ready
           </button>
         )}
-        {state == "ready" && (
+        {state === "ready" && (
           <button className="cButtonType05" onClick={fnBtnStore}>
             Store Order
           </button>

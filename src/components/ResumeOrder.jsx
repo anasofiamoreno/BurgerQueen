@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import {
-  getFirestore,
-  setDoc,
-  getDoc,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
-import { set, ref, getDatabase, get, onValue, update } from "firebase/database";
+import { getFirestore, updateDoc, doc, deleteField } from "firebase/firestore";
+import { ref, getDatabase, update } from "firebase/database";
 
 export function ResumeOrder({ state, fnData, classState, userState }) {
   const [orderInProgress, setOrderInProgress] = useState(0);
+
+  useEffect(() => {
+    console.log();
+    setOrderInProgress(
+      Object.keys(state.costumers[state.sCostumer].ordersInKitchen).length
+    );
+  }, [orderInProgress, state.sCostumer, state.costumers]);
 
   let costumerArray = [];
   let totalCost = 0;
@@ -22,44 +23,11 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
     costumerArray = Object.entries(state.costumers).find(
       (element) => element[0] === state.sCostumer
     );
-    console.log(costumerArray);
     costumerArray = Object.entries(costumerArray[1].orders);
     costumerArray.forEach((element) => {
       element[0] !== "menuSelected" &&
         (totalCost += element[1].quantity * element[1].price);
     });
-  }
-
-  const fnOrderInProgress = async () => {
-    const starCountRef = ref(
-      setdb,
-      "orders/" +
-        state.user.name.slice(0, 1 + state.user.name.search("@")) +
-        "/" +
-        state.sCostumer
-    );
-    onValue(starCountRef, (snapshot) => {
-      const data = snapshot.val();
-      //if (data != null) setOrderInProgress(Object.keys(data).length);
-    });
-
-    const docRef = doc(db, "validUsers", userState.name);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      console.log(docSnap.data());
-      if (docSnap.data().costumers[state.sCostumer] != undefined)
-        setOrderInProgress(
-          Object.keys(docSnap.data().costumers[state.sCostumer].orders).length
-        );
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  };
-
-  if (orderInProgress === 0) {
-    fnOrderInProgress();
   }
 
   const fnSendOrderToServer = () => {
@@ -72,7 +40,7 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
 
     let tempOrder = state.costumers[state.sCostumer];
     tempOrder.date = date;
-    if (orderInProgress == 0) {
+    if (orderInProgress === 0) {
       const washingtonRef = doc(db, "validUsers", userState.name);
 
       // Set the "capital" field of the city 'DC'
@@ -88,24 +56,7 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
 
         ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".time"]: "",
       });
-
-      await set(
-        ref(
-          setdb,
-          "orders/" +
-            state.user.name.slice(0, 1 + state.user.name.search("@")) +
-            "/" +
-            state.sCostumer
-        ),
-        {
-          [uuidv4().slice(0, 8)]: tempOrder,
-        }
-      );
     } else {
-      const nesOrder = {
-        [uuidv4().slice(0, 8)]: state.costumers[state.sCostumer].orders,
-      };
-
       const washingtonRef = doc(db, "validUsers", userState.name);
 
       // Set the "capital" field of the city 'DC'
@@ -153,6 +104,85 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
     //fnData("delCostumers", newCostumer);
   };
 
+  const fnShowOrdersInProgress = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>State</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(state.costumers[state.sCostumer].ordersInKitchen).map(
+            (itemss) => {
+              return (
+                <tr>
+                  <td>{itemss[0]}</td>
+                  <td>{itemss[1].state}</td>
+                  <td>
+                    {itemss[1].state === "doing" && (
+                      <button
+                        className="cButtonType00"
+                        onClick={() => {
+                          fnEditStateOrder(itemss[0], "cancel");
+                        }}
+                      >
+                        Cancel Order
+                      </button>
+                    )}
+                    {itemss[1].state === "ready" && (
+                      <button
+                        className="cButtonType00"
+                        onClick={() => {
+                          fnEditStateOrder(itemss[0], "served");
+                        }}
+                      >
+                        Served
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              );
+            }
+          )}
+        </tbody>
+      </table>
+    );
+  };
+
+  const fnEditStateOrder = async (order, newState) => {
+    const Ref = doc(db, "validUsers", userState.name);
+
+    await updateDoc(Ref, {
+      ["costumers." + [state.sCostumer] + ".orders." + order + ".state"]:
+        newState,
+    });
+  };
+
+  const fnDeleteCostumer = async () => {
+    const Ref = doc(db, "validUsers", userState.name);
+
+    await updateDoc(Ref, {
+      ["costumers." + state.sCostumer]: deleteField(),
+    });
+
+    const newCostumer = {};
+    Object.keys(state.costumers).forEach((costumer) => {
+      if (costumer !== state.sCostumer)
+        newCostumer[costumer] = state.costumers[costumer];
+    });
+    let newSCostumer = "";
+    Object.keys(state.costumers).forEach((element, i) => {
+      if (i === 0) {
+        newSCostumer = element;
+      }
+    });
+    console.log(newCostumer);
+    fnData("teste", newCostumer, newSCostumer);
+  };
+
   return (
     <div key={uuidv4()} id="idResumeOrder" className="cResumeOrder">
       <div key={uuidv4()} className="cContournResumeOrder">
@@ -160,46 +190,64 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
           <p key={uuidv4()} className="cFontTypeTitleMB">
             Resume {state.sCostumer}
           </p>
-          <table key={uuidv4()} className="cTableResume cFontTypeTextS">
-            <thead>
-              <tr>
-                <th>Dish</th>
-                <th>Qty</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody className="cTableResumeMargin">
-              {costumerArray.map((element) => {
-                return (
-                  element[0] !== "menuSelected" && (
-                    <React.Fragment key={uuidv4()}>
-                      <tr>
-                        <td>{element[0]}</td>
-                        <td>{element[1].quantity}</td>
-                        <td>{"$" + element[1].price}</td>
-                      </tr>
-                    </React.Fragment>
-                  )
-                );
-              })}
-            </tbody>
-          </table>
 
-          {costumerArray.length > 0 && (
-            <React.Fragment key={uuidv4()}>
-              <div className="cTotalResume">
-                <div>
-                  <p className="cFontTypeTextSB"> Total = {"$" + totalCost} </p>
-                </div>
+          {totalCost === 0 && (
+            <>
+              <div className="cEditOrders">
+                <p className="cFontTypeTitleMB">
+                  {orderInProgress} Orders In Progress
+                </p>
+
+                {orderInProgress === 0 && (
+                  <button className="cButtonType00" onClick={fnDeleteCostumer}>
+                    Delet Costumer
+                  </button>
+                )}
+                {orderInProgress !== 0 && fnShowOrdersInProgress()}
               </div>
-            </React.Fragment>
+            </>
           )}
-        </div>
-        {orderInProgress > 0 && (
-          <div>
-            <p>Orders In Progress</p>
-            <p>{orderInProgress}</p>
+
+          {totalCost !== 0 && (
+            <table key={uuidv4()} className="cTableResume cFontTypeTextS">
+              <thead>
+                <tr>
+                  <th>Dish</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+            </table>
+          )}
+          <div className="cTableResumeSup">
+            <table key={uuidv4()} className="cTableResume cFontTypeTextS">
+              <tbody className="cTableResumeMargin">
+                {costumerArray.map((element) => {
+                  return (
+                    element[0] !== "menuSelected" && (
+                      <React.Fragment key={uuidv4()}>
+                        <tr>
+                          <td>{element[0]}</td>
+                          <td>{element[1].quantity}</td>
+                          <td>{"$" + element[1].price}</td>
+                        </tr>
+                      </React.Fragment>
+                    )
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
+        </div>
+
+        {costumerArray.length > 0 && (
+          <React.Fragment key={uuidv4()}>
+            <div className="cTotalResume">
+              <div>
+                <p className="cFontTypeTextSB"> Total = {"$" + totalCost} </p>
+              </div>
+            </div>
+          </React.Fragment>
         )}
 
         <div>
