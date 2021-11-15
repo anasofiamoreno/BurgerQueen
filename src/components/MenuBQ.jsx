@@ -3,7 +3,6 @@ import { MenuItem } from "./MenuItem";
 import { v4 as uuidv4 } from "uuid";
 
 export function MenuBQ({ state, fnData, classState }) {
-  console.log(state);
   const menuSelected = state.costumers[state.sCostumer].menuSelected;
   const menusList = Object.keys(state.menu);
   const menuitems = Object.values(state.menu);
@@ -12,7 +11,6 @@ export function MenuBQ({ state, fnData, classState }) {
     Object.keys(state.menu[menuSelected]),
     menuSelected,
   ]);
-  console.log(selectedMenu);
   const fnShowMenu = (items, typeMenu) => {
     console.log("menu", items, "selected", typeMenu);
     setSelectedMenu([Object.keys(items), typeMenu]);

@@ -2,7 +2,7 @@ import React from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth, signOut } from "firebase/auth";
 
-export function MenuD({ state, fnData, userState }) {
+export function MenuD({ fnData, userState }) {
   const makeLogOut = () => {
     const firebaseConfig = {
       apiKey: "AIzaSyA1EUw7Yp4Z2O-wl7MqyV9zTc2tPZB5z0w",

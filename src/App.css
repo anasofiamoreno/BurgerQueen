@@ -1,5 +1,6 @@
 :root {
   --main-bg-color: brown;
+  --background-cards: rgb(236, 233, 217);
 }
 
 .cNoEvent {
@@ -58,6 +59,13 @@
   margin-right: 20px;
 }
 
+.cImgNoty {
+  height: 70%;
+  right: 15%;
+  top: -25%;
+  position: relative;
+}
+
 .cMenuSI {
   display: flex;
   align-items: center;
@@ -81,7 +89,8 @@
   top: 10%;
   width: 100%;
   height: 85%;
-  background-color: rgba(36, 34, 27, 0.62);
+  /*background-color: rgba(36, 34, 27, 0.62);*/
+  background-image: url("./img/burgerbackgroundegrade.png");
 }
 
 p {
@@ -118,7 +127,8 @@ p {
 }
 
 .cMenuBQ {
-  height: 90%;
+  height: 100%;
+  display: flex;
 }
 
 .cContournMenuWithEvents {
@@ -126,13 +136,17 @@ p {
   align-items: center;
   flex-direction: column;
   width: 90%;
-  min-height: 80%;
-  margin: 1%;
-  background-image: url("./img/burgerbackground.jpeg");
+  height: 95%;
+  margin: auto;
+
+  background: var(--background-cards);
+  /*background-image: url("./img/burgerbackground.jpeg");*/
   /*background-size: contain;*/
   border-radius: 15px;
   pointer-events: all;
   opacity: 1;
+  border: black;
+  border-style: solid;
 }
 .cContournMenuWithoutEvents {
   display: flex;
@@ -178,15 +192,19 @@ p {
   text-align: left;
 }
 
+.cTable td {
+  padding: 3px;
+}
+
 .cTable th:nth-child(1) {
   width: 50%;
 }
 
 .cTable th:nth-child(2) {
-  width: 20%;
+  width: 10%;
 }
 .cTable th:nth-child(3) {
-  width: 30%;
+  width: 40%;
 }
 
 .cTable td:nth-child(1) {
@@ -228,6 +246,20 @@ p {
 }
 
 .cTableResume td:nth-child(1) {
+  width: 60%;
+  padding-left: 2em;
+}
+
+.cTableResume td:nth-child(2) {
+  width: 20%;
+  text-align: center;
+}
+.cTableResume td:nth-child(3) {
+  width: 20%;
+  text-align: center;
+}
+
+.cTableResume td:nth-child(1) {
   text-align: left;
   padding-left: 1em;
 }
@@ -258,7 +290,8 @@ p {
 }
 
 .cResumeOrder {
-  height: 90%;
+  height: 100%;
+  display: flex;
 }
 
 .cContournResumeOrder {
@@ -266,11 +299,21 @@ p {
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  min-width: 200px;
-  min-height: 80%;
-  margin: 10px;
-  background-image: url("./img/burgerbackground.jpeg");
+  width: 90%;
+  height: 95%;
+  margin: auto;
+  /*background-image: url("./img/burgerbackground.jpeg");*/
+  background-color: var(--background-cards);
+  border: black;
+  border-style: solid;
   border-radius: 15px;
+}
+.cTableResumeSup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .cTotalResume {
@@ -289,11 +332,14 @@ p {
   height: 100%;
   margin: auto;
   justify-content: center;
-  overflow-x: scroll;
+  overflow-y: scroll;
 }
 
 .cPostick {
-  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--background-cards);
   border-radius: 3%;
   border-style: solid;
   border-width: 3px;
@@ -301,6 +347,14 @@ p {
   margin: 0.5%;
   padding: 1%;
   float: left;
+}
+
+.cTablePostick th:nth-child(1) {
+  width: 10%;
+}
+
+.cTablePostick th:nth-child(2) {
+  width: 90%;
 }
 
 .cTablePostick td {
@@ -311,6 +365,19 @@ p {
   display: flex;
   margin-top: 1em;
   justify-content: center;
+}
+
+.cEditOrders {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  border-style: solid;
+  border-radius: 15px;
+  margin: auto;
+}
+
+.cEditOrders button {
+  margin: auto;
 }
 
 /*Menu Inferior/////////////////////////////////////*/
@@ -334,6 +401,14 @@ p {
 .cButtonType00 {
   border-radius: 5px;
   background-color: #dba42b;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+
+.cButtonType00Red {
+  border-radius: 5px;
+  background-color: red;
   text-shadow: 1px 1px 6px #000;
   font-size: 1.3em;
   margin-right: 10px;
@@ -363,8 +438,15 @@ p {
   margin-right: 10px;
 }
 
+.cButtonType05 {
+  border-radius: 5px;
+  background-color: green;
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+
 .cButtonTypeMkOr {
-  border-bottom-left-radius: 15px;
+  border-bottom-left-radius: 12px;
   border-style: none;
   background-color: #24221b;
   text-shadow: 1px 1px 6px #000;
@@ -372,7 +454,7 @@ p {
   width: 80%;
 }
 .cButtonTypeClOr {
-  border-bottom-right-radius: 15px;
+  border-bottom-right-radius: 13px;
   border-style: none;
   background-color: red;
   text-shadow: 1px 1px 6px #000;
@@ -395,6 +477,21 @@ p {
   text-shadow: 1px 1px 6px #000;
   padding: 10px;
   margin: 0px;
+}
+
+.cBtonwithNoty {
+  display: flex;
+  height: 50%;
+  top: 50%;
+  margin-right: 30px;
+}
+
+.cButtonTypNoty {
+  border-radius: 5px;
+  background-color: #dba42b;
+  text-shadow: 1px 1px 5px #000;
+  font-size: 1.3em;
+  margin: 0;
 }
 
 /*Fonts/////////////////////////////////////*/
@@ -446,7 +543,7 @@ p {
   color: black;
   font-weight: bolder;
   text-shadow: 1px 1px 1px #000;
-  font-size: 1.3em;
+  font-size: 1.1em;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
 }
