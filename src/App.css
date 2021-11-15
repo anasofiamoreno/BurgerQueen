@@ -1,0 +1,573 @@
+:root {
+  --main-bg-color: brown;
+  --background-cards: rgb(236, 233, 217);
+}
+
+.cNoEvent {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.cDoEvent {
+  pointer-events: all;
+  opacity: 1;
+}
+
+/*Menu Superior/////////////////////////////////////*/
+
+.cMenuSWithEvents {
+  position: fixed;
+  top: 0%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 10%;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  background-color: #24221b;
+  pointer-events: all;
+  opacity: 1;
+}
+.cMenuSWithoutEvents {
+  position: fixed;
+  top: 0%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 10%;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  background-color: #24221b;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.cImgLogo {
+  height: 90%;
+  margin-right: 20px;
+}
+
+.cImgNoty {
+  height: 70%;
+  right: 15%;
+  top: -25%;
+  position: relative;
+}
+
+.cMenuSI {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 100%;
+  margin-left: 1%;
+}
+
+.cMenuSD {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1%;
+}
+
+/*Content/////////////////////////////////////*/
+
+.cContentP {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  top: 10%;
+  width: 100%;
+  height: 85%;
+  /*background-color: rgba(36, 34, 27, 0.62);*/
+  background-image: url("./img/burgerbackgroundegrade.png");
+}
+
+p {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+#idLogIn {
+  display: none;
+}
+
+.cFormLogIn {
+  display: flex;
+  position: fixed;
+  top: 11%;
+  right: 1%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: auto;
+  width: fit-content;
+  padding: 0em 2em 1em 2em;
+  background-image: url("./img/wrn.jpg");
+  background-size: cover;
+  border-radius: 10px;
+}
+
+.cImgBack {
+  height: 50%;
+  display: block;
+  margin: auto;
+}
+
+.cMenuBQ {
+  height: 100%;
+  display: flex;
+}
+
+.cContournMenuWithEvents {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+  height: 95%;
+  margin: auto;
+
+  background: var(--background-cards);
+  /*background-image: url("./img/burgerbackground.jpeg");*/
+  /*background-size: contain;*/
+  border-radius: 15px;
+  pointer-events: all;
+  opacity: 1;
+  border: black;
+  border-style: solid;
+}
+.cContournMenuWithoutEvents {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 90%;
+  min-height: 80%;
+  margin: 1%;
+  background-image: url("./img/burgerbackground.jpeg");
+  /*background-size: contain;*/
+  border-radius: 15px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.cContournMenuSup {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cContournMenuDow {
+  width: 98%;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cContournMenuByItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.cTable {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+
+  text-align: left;
+}
+
+.cTable td {
+  padding: 3px;
+}
+
+.cTable th:nth-child(1) {
+  width: 50%;
+}
+
+.cTable th:nth-child(2) {
+  width: 10%;
+}
+.cTable th:nth-child(3) {
+  width: 40%;
+}
+
+.cTable td:nth-child(1) {
+  text-align: left;
+  padding-left: 1em;
+}
+
+.cTable th:nth-child(1) {
+  text-align: left;
+  padding-left: 2em;
+}
+.cTable th:nth-child(2) {
+  text-align: center;
+}
+
+.cTable td:nth-child(2) {
+  text-align: center;
+}
+
+.cTableResume {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.cTableResume th:nth-child(1) {
+  width: 60%;
+  padding-left: 2em;
+}
+
+.cTableResume th:nth-child(2) {
+  width: 20%;
+  text-align: center;
+}
+.cTableResume th:nth-child(3) {
+  width: 20%;
+  text-align: center;
+}
+
+.cTableResume td:nth-child(1) {
+  width: 60%;
+  padding-left: 2em;
+}
+
+.cTableResume td:nth-child(2) {
+  width: 20%;
+  text-align: center;
+}
+.cTableResume td:nth-child(3) {
+  width: 20%;
+  text-align: center;
+}
+
+.cTableResume td:nth-child(1) {
+  text-align: left;
+  padding-left: 1em;
+}
+
+.cTableResume td:nth-child(2) {
+  text-align: center;
+}
+
+.cTableResume td:nth-child(3) {
+  text-align: center;
+}
+
+.cTableResume tfoot td:nth-child(2) {
+  text-align: center;
+  border-top: 5px solid black;
+  width: 30%;
+}
+
+.cTableResume tfoot td:nth-child(3) {
+  width: 30%;
+  text-align: center;
+  border-top: 5px solid black;
+}
+
+.cTableResume tbody {
+  padding-top: 10px;
+  border-top: 5px solid black;
+}
+
+.cResumeOrder {
+  height: 100%;
+  display: flex;
+}
+
+.cContournResumeOrder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 90%;
+  height: 95%;
+  margin: auto;
+  /*background-image: url("./img/burgerbackground.jpeg");*/
+  background-color: var(--background-cards);
+  border: black;
+  border-style: solid;
+  border-radius: 15px;
+}
+.cTableResumeSup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.cTotalResume {
+  display: flex;
+  justify-content: right;
+  width: 95%;
+  margin-top: 30px;
+}
+
+.cTotalResume div {
+  border-top: 5px solid black;
+}
+
+.cContenteKitchen {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  justify-content: center;
+  overflow-y: scroll;
+}
+
+.cPostick {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--background-cards);
+  border-radius: 3%;
+  border-style: solid;
+  border-width: 3px;
+  border-color: #24221b;
+  margin: 0.5%;
+  padding: 1%;
+  float: left;
+}
+
+.cTablePostick th:nth-child(1) {
+  width: 10%;
+}
+
+.cTablePostick th:nth-child(2) {
+  width: 90%;
+}
+
+.cTablePostick td {
+  border-bottom: 5px solid black;
+}
+
+.cBtnReady {
+  display: flex;
+  margin-top: 1em;
+  justify-content: center;
+}
+
+.cEditOrders {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  border-style: solid;
+  border-radius: 15px;
+  margin: auto;
+}
+
+.cEditOrders button {
+  margin: auto;
+}
+
+/*Menu Inferior/////////////////////////////////////*/
+
+.cMenuD {
+  position: fixed;
+  top: 95%;
+  width: 100%;
+  height: 5%;
+  background-color: #24221b;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.cMakeOrder {
+  width: 100%;
+}
+
+/*Buttons/////////////////////////////////////*/
+
+.cButtonType00 {
+  border-radius: 5px;
+  background-color: #dba42b;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+
+.cButtonType00Red {
+  border-radius: 5px;
+  background-color: red;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+
+.cButtonType01 {
+  border-radius: 10px;
+  background-color: #24221b;
+  text-shadow: 1px 1px 6px #000;
+  margin: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.cButtonType03 {
+  border-radius: 5px;
+  background-color: #dba42b;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 100%;
+  width: 40%;
+}
+
+.cButtonType04 {
+  border-radius: 5px;
+  background-color: #dba42b;
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+
+.cButtonType05 {
+  border-radius: 5px;
+  background-color: green;
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+
+.cButtonTypeMkOr {
+  border-bottom-left-radius: 12px;
+  border-style: none;
+  background-color: #24221b;
+  text-shadow: 1px 1px 6px #000;
+  padding: 10px;
+  width: 80%;
+}
+.cButtonTypeClOr {
+  border-bottom-right-radius: 13px;
+  border-style: none;
+  background-color: red;
+  text-shadow: 1px 1px 6px #000;
+  padding: 10px;
+  width: 20%;
+}
+
+.cButtonTypeConfirmOr {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background-color: green;
+  text-shadow: 1px 1px 6px #000;
+  padding: 10px;
+  margin: 0px;
+}
+.cButtonTypeBackOr {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: black;
+  text-shadow: 1px 1px 6px #000;
+  padding: 10px;
+  margin: 0px;
+}
+
+.cBtonwithNoty {
+  display: flex;
+  height: 50%;
+  top: 50%;
+  margin-right: 30px;
+}
+
+.cButtonTypNoty {
+  border-radius: 5px;
+  background-color: #dba42b;
+  text-shadow: 1px 1px 5px #000;
+  font-size: 1.3em;
+  margin: 0;
+}
+
+/*Fonts/////////////////////////////////////*/
+
+.cFontTypeTitleS {
+  color: black;
+  font-weight: bold;
+  text-shadow: 1px 1px 4px #000;
+  font-size: 1.3em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+
+.cFontTypeTitleS_White {
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 4px #000;
+  font-size: 1.3em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+
+.cFontTypeTitleM {
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.8em;
+  font-family: "Lucida Sans", Geneva, Verdana, sans-seriff;
+}
+
+.cFontTypeTitleMB {
+  color: black;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px #000;
+  font-size: 1.8em;
+  font-family: "Lucida Sans", Geneva, Verdana, sans-seriff;
+}
+
+.cFontTypeTitleSB {
+  color: black;
+  font-weight: bolder;
+  text-shadow: 1px 1px 6px #000;
+  font-size: 1.4em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+
+.cFontTypeTextS {
+  color: black;
+  font-weight: bolder;
+  text-shadow: 1px 1px 1px #000;
+  font-size: 1.1em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+.cFontTypeTextSB {
+  color: black;
+  font-weight: bolder;
+  text-shadow: 1px 1px 1px #000;
+  font-size: 1.4em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+
+/*Inputs/////////////////////////////////////*/
+
+.cInputType00 {
+  color: black;
+  font-size: 1.3em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
+}
+
+.cInputType00::placeholder {
+  color: #dba32b8a;
+  font-size: 1.1em;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Sans Unicode",
+    Geneva, Verdana, sans-seriff;
+}
