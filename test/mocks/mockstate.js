@@ -30,7 +30,7 @@ import {menulist} from './listmenu'
         }
       })
       break
-      case 'sCostumer': setState({
+      case 'sCostumer': setState ({
         ...state,
         //sCostumer: value,
         ...state.sCostumer = value,

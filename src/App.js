@@ -9,19 +9,24 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDoc, doc, onSnapshot } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
+import { firebaseConfig } from "./keyFireBase"
 
 
 
 
 function App(){
 
-  const [state, setState] = useState({
-    menu: menulist,
-    costumers: {},
-    sCostumer: "",
-  })
+  initializeApp(firebaseConfig);
+  const db = getFirestore();
+  const auth = getAuth()
 
-  const[userState, setUserState] = useState({log: false, name:'', type: ""})
+  const[userState, setUserState] = useState({log: false, name:'', type: "",})
+
+  const[sCostumer, setSCostumer] = useState("")
+
+  const[state, setState] = useState({menu: menulist, costumers: {},})
+
+  const [orders, setOrders] = useState({})
 
   const [classState, setClass] = useState({
     MenuBQ:"cContournMenuWithEvents",
@@ -29,114 +34,74 @@ function App(){
     Button: "cDoEvent",
   })
 
-  const [orders, setOrders] = useState({})
+  
 
   useEffect(() => {
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA1EUw7Yp4Z2O-wl7MqyV9zTc2tPZB5z0w",
-      authDomain: "burgerqueendb-3614e.firebaseapp.com",
-      projectId: "burgerqueendb-3614e",
-      storageBucket: "burgerqueendb-3614e.appspot.com",
-      messagingSenderId: "38992262003",
-      appId: "1:38992262003:web:01c5062677b18111444b06",
-    };
-
-    initializeApp(firebaseConfig);
-    const db = getFirestore();
-    const auth = getAuth()
-  
     onAuthStateChanged(auth, async (user) => {
+      console.log("Auto Login")
       if (user)  {
 
         await getDoc(doc(db,"validUsers", user.email)).then((doc) => {
-          let tempUser = userState
-          tempUser.type = doc.data().status.type
-          tempUser.name = user.email
-          tempUser.log = true
+          console.log("logIn")
+          fnData("logIn", true, user.email, doc.data().status.type)
         })
 
-        switch(userState.type){
-          case "admin":
-            break
-          case "waiter":
-      
-            onSnapshot(doc(db, "validUsers", user.email, ), (doc) => {
-              const newCostumer = state.costumers
-              const newSCostumer = state
-
-              Object.keys(doc.data().costumers).forEach((costumer,i) => {
-                let noty = 0
-                const ordersInKitchen = {}
-                if(i === 0 ){
-                  newSCostumer.sCostumer = costumer
-                }
-                Object.keys(doc.data().costumers[costumer].orders).forEach(stateItem => {
-                  if(doc.data().costumers[costumer].orders[stateItem].state ==="ready") noty=1
-                  if(doc.data().costumers[costumer].orders[stateItem].state === "ready" 
-                  || doc.data().costumers[costumer].orders[stateItem].state === "doing") 
-                  ordersInKitchen[stateItem] = doc.data().costumers[costumer].orders[stateItem] 
-                })
-                newCostumer[costumer] = {menuSelected: Object.keys(state.menu)[0], orders:{}, noty: noty, ordersInKitchen:ordersInKitchen}
-              })
-              fnData("render")
-              
-            });
-            break
-          case "kitchen":
-
-            onSnapshot(doc(db, "validUsers", "waiter@bqueen.com", ), (doc) => {
-              //const newCostumer = state.costumers
-              //const newSCostumer = state
-              Object.keys(doc.data().costumers).forEach((costumer,i) => {
-                if(i === 0 ){
-                  //newSCostumer.sCostumer = costumer
-                }
-                setOrders(doc.data().costumers)
-                //newCostumer[costumer] = {menuSelected: Object.keys(state.menu)[0], orders:{}}
-              })
-            });
-            break
-          default:
-        }
-        
       } else {
         console.log("No Loged")
       }
     })
 
+  },[])
 
+  useEffect(() =>{
+    if(userState.log === true){
+    switch(userState.type){
+      case "admin":
+        break
+      case "waiter":
+
+        onSnapshot(doc(db, "validUsers", userState.name, ), (doc) => {
+          console.log("snapshot")
+          const newCostumer = {}
+          console.log("sCostumer=",sCostumer)
+          Object.keys(doc.data().costumers).forEach((costumer,i) => {
+            let noty = 0
+            const ordersInKitchen = {}
+            if(i === 0 && sCostumer === ""){
+              doc.data().sCostumer === "" ? fnData("sCostumer",costumer) : fnData("sCostumer",doc.data().sCostumer)
+            }
+            Object.keys(doc.data().costumers[costumer].orders).forEach(stateItem => {
+              if(doc.data().costumers[costumer].orders[stateItem].state ==="ready" || doc.data().costumers[costumer].orders[stateItem].state ==="stored") noty=1
+              if(doc.data().costumers[costumer].orders[stateItem].state === "ready" 
+              || doc.data().costumers[costumer].orders[stateItem].state === "doing" || doc.data().costumers[costumer].orders[stateItem].state === "stored") 
+              ordersInKitchen[stateItem] = doc.data().costumers[costumer].orders[stateItem] 
+            })
+            newCostumer[costumer] = {menuSelected: Object.keys(state.menu)[0], orders:{}, noty: noty, ordersInKitchen:ordersInKitchen}
+          })
+
+          fnData("setAllCostumers", newCostumer)
+        
+          
+        });
+        break
+      case "kitchen":
+        onSnapshot(doc(db, "validUsers", "waiter@bqueen.com", ), (doc) => {
+            setOrders(doc.data().costumers)
+        });
+        break
+      default:
+    }
+  }
   },[userState])
 
   const fnData = (data, value, costumer, x, y) => {
 
     switch(data) {
-      case 'logIn': setState({
-        ...state,
-        user: {
-          ...state.user,
-          log: value,
-          name: costumer,
-          type: y,
-        },
-        sCostumer: x,
-      })
-      break
-      case 'logOut': setState({
-        ...state,
-        sCostumer: "",
-        costumers : {},
-      })
-      setUserState({...userState, log: false, name:"", type:""})
-      break
-      case 'user': setState({
-        ...state,
-        user: {
-          ...state.user,
-          name: value
-        }
-      })
-      break
+      case 'logIn': setUserState({...useState, log: value, name: costumer, type: x,})
+       break
+      case 'logOut': setUserState({...userState, log: false, name:"", type:""})
+       break
       case 'setCostumers': console.log("sisi")
       setState({
         ...state,
@@ -159,13 +124,10 @@ function App(){
         ...state, costumers: value, sCostumer: Object.keys(state.costumers)[0],
       })
       break
-      case 'sCostumer': setState({
-        ...state,
-        sCostumer: value,
-        
-      })
+      case 'sCostumer': setSCostumer(value
+      )
       break
-      case 'changCostumer': setState({
+      case 'changCostumerz': setState({
         ...state,
         costumers: {
           ...state.costumers,
@@ -190,9 +152,14 @@ function App(){
         chekedLog: true,
       })
       break
-      case 'render': setState({...state, sCostumer: state.sCostumer})
+      case 'setAllCostumers': setState({
+        ...state,
+        costumers: value,
+      })
       break
-      default: console.log("Error Data Type to Modify")
+      case 'render': setState({...state, sCostumer: sCostumer})
+      break
+      default: console.log("Error Data Type No finded", data )
     }
 
 
@@ -201,8 +168,8 @@ function App(){
   return (
 
     <div key={uuidv4()} className="App">
-      <MenuS key={uuidv4()} state = {state} fnData = {fnData} classState = {classState} userState = {userState}/>
-      <ContentPage key={uuidv4()} state = {state} classState = {classState} fnData = {fnData} orders = {orders} userState = {userState}/>
+      <MenuS key={uuidv4()} state = {state} fnData = {fnData} classState = {classState} userState = {userState} sCostumer = {sCostumer}/>
+      <ContentPage key={uuidv4()} state = {state} classState = {classState} fnData = {fnData} orders = {orders} userState = {userState} sCostumer = {sCostumer}/>
       <MenuD state = {state} fnData = {fnData} userState = {userState}/>
     </div>
     

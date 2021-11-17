@@ -1,8 +1,8 @@
 import React from "react";
 
-export function MenuItem({ item, price, state, fnData }) {
+export function MenuItem({ item, price, state, fnData, sCostumer }) {
   const fnAddItem = (item, price) => {
-    let items = state.costumers[state.sCostumer].orders;
+    let items = state.costumers[sCostumer].orders;
     if (items[item] === undefined) {
       items[item] = { quantity: 1, type: false, price: price };
     } else {
@@ -13,7 +13,7 @@ export function MenuItem({ item, price, state, fnData }) {
   };
 
   const fnRemoveItem = () => {
-    let items = state.costumers[state.sCostumer].orders;
+    let items = state.costumers[sCostumer].orders;
 
     items[item] && items[item].quantity > 1
       ? (items[item].quantity -= 1)

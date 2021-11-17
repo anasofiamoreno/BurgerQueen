@@ -24,7 +24,6 @@ export function ContentKitchen({ orders }) {
           });
       });
     });
-    console.log(array);
 
     array = array.sort((a, b) => {
       return a.date - b.date;

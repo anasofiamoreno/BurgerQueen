@@ -2,7 +2,7 @@ export const menulist = {
     "Breakfast": {
         "American Coffee": {"price": 5},
         "Coffe with milk": {"price": 7},
-        "Sandwitch with ham and cheese": {"price": 10},
+        "Sandwich with ham and cheese": {"price": 10},
         "Juice of Fruits Natural": {"price": 7}
     },
     "Lunch": {

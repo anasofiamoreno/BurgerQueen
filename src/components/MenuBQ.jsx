@@ -2,8 +2,8 @@ import { React, useState } from "react";
 import { MenuItem } from "./MenuItem";
 import { v4 as uuidv4 } from "uuid";
 
-export function MenuBQ({ state, fnData, classState }) {
-  const menuSelected = state.costumers[state.sCostumer].menuSelected;
+export function MenuBQ({ state, fnData, classState, sCostumer }) {
+  const menuSelected = state.costumers[sCostumer].menuSelected;
   const menusList = Object.keys(state.menu);
   const menuitems = Object.values(state.menu);
 
@@ -12,12 +12,11 @@ export function MenuBQ({ state, fnData, classState }) {
     menuSelected,
   ]);
   const fnShowMenu = (items, typeMenu) => {
-    console.log("menu", items, "selected", typeMenu);
     setSelectedMenu([Object.keys(items), typeMenu]);
-    let newMenuSelected = state.costumers[state.sCostumer];
+    let newMenuSelected = state.costumers[sCostumer];
     newMenuSelected.menuSelected = typeMenu;
 
-    fnData("changCostumer", newMenuSelected);
+    //fnData("changCostumer", newMenuSelected);
   };
 
   return (
@@ -45,6 +44,7 @@ export function MenuBQ({ state, fnData, classState }) {
                 <th>Dish</th>
                 <th>Price</th>
               </tr>
+
               {selectedMenu[0].map((element, i) => (
                 <MenuItem
                   key={element}
@@ -52,6 +52,7 @@ export function MenuBQ({ state, fnData, classState }) {
                   price={state.menu[selectedMenu[1]][element].price}
                   state={state}
                   fnData={fnData}
+                  sCostumer={sCostumer}
                 />
               ))}
             </tbody>

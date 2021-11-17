@@ -1,31 +1,20 @@
 import { React } from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { firebaseConfig } from "../keyFireBase";
 
 export function LogIn({ fnData, userStates }) {
-  const firebaseConfig = {
-    apiKey: "AIzaSyA1EUw7Yp4Z2O-wl7MqyV9zTc2tPZB5z0w",
-    authDomain: "burgerqueendb-3614e.firebaseapp.com",
-    projectId: "burgerqueendb-3614e",
-    storageBucket: "burgerqueendb-3614e.appspot.com",
-    messagingSenderId: "38992262003",
-    appId: "1:38992262003:web:01c5062677b18111444b06",
-  };
   initializeApp(firebaseConfig);
 
   const makeLogIn = (email, password) => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(userCredential);
         const user = userCredential.user;
-        const tempUserState = userStates;
-        tempUserState.log = true;
-        tempUserState.name = user.email;
-        //fnData("logIn", true, user.email, "", "");
+        fnData("logIn", true, user.email, "");
       })
       .catch((error) => {
-        fnData("user", "No Loged");
+        console.log("Error login", error);
       });
   };
 

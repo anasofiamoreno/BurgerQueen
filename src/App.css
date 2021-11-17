@@ -1,6 +1,7 @@
 :root {
   --main-bg-color: brown;
   --background-cards: rgb(236, 233, 217);
+  --red-burger: rgb(224, 22, 22);
 }
 
 .cNoEvent {
@@ -59,10 +60,28 @@
   margin-right: 20px;
 }
 
+.cImgArrow {
+  height: 30%;
+}
+
+.cDivArrow {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 7%;
+  height: 100%;
+}
+
+.cDivArrow p {
+  position: relative;
+  top: 15%;
+  right: 5%;
+}
+
 .cImgNoty {
   height: 70%;
   right: 15%;
-  top: -25%;
+  top: -15%;
   position: relative;
 }
 
@@ -88,7 +107,7 @@
   flex-direction: row;
   top: 10%;
   width: 100%;
-  height: 85%;
+  height: 83%;
   /*background-color: rgba(36, 34, 27, 0.62);*/
   background-image: url("./img/burgerbackgroundegrade.png");
 }
@@ -138,10 +157,7 @@ p {
   width: 90%;
   height: 95%;
   margin: auto;
-
   background: var(--background-cards);
-  /*background-image: url("./img/burgerbackground.jpeg");*/
-  /*background-size: contain;*/
   border-radius: 15px;
   pointer-events: all;
   opacity: 1;
@@ -153,10 +169,11 @@ p {
   align-items: center;
   flex-direction: column;
   width: 90%;
-  min-height: 80%;
-  margin: 1%;
-  background-image: url("./img/burgerbackground.jpeg");
-  /*background-size: contain;*/
+  height: 95%;
+  margin: auto;
+  background: var(--background-cards);
+  border: black;
+  border-style: solid;
   border-radius: 15px;
   pointer-events: none;
   opacity: 0.4;
@@ -176,6 +193,12 @@ p {
   flex-direction: column;
   margin-top: 10px;
   margin-bottom: 10px;
+  justify-content: center;
+  overflow-y: scroll;
+}
+
+.cScroll {
+  overflow-y: scroll;
 }
 
 .cContournMenuByItem {
@@ -289,6 +312,23 @@ p {
   border-top: 5px solid black;
 }
 
+.cTableStatusOrders {
+  margin: auto;
+  width: 90%;
+}
+.cTableStatusOrders td {
+  text-align: center;
+}
+
+.cTableStatusOrders td:nth-child(1) {
+  font-size: large;
+  font-weight: bolder;
+}
+.cTableStatusOrders td:nth-child(2) {
+  font-size: large;
+  font-weight: bolder;
+}
+
 .cResumeOrder {
   height: 100%;
   display: flex;
@@ -374,6 +414,7 @@ p {
   border-style: solid;
   border-radius: 15px;
   margin: auto;
+  padding-bottom: 1em;
 }
 
 .cEditOrders button {
@@ -384,9 +425,9 @@ p {
 
 .cMenuD {
   position: fixed;
-  top: 95%;
+  top: 93%;
   width: 100%;
-  height: 5%;
+  height: 7%;
   background-color: #24221b;
   display: flex;
   justify-content: space-between;
@@ -394,6 +435,10 @@ p {
 }
 .cMakeOrder {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 /*Buttons/////////////////////////////////////*/
@@ -401,14 +446,14 @@ p {
 .cButtonType00 {
   border-radius: 5px;
   background-color: #dba42b;
-  text-shadow: 1px 1px 6px #000;
   font-size: 1.3em;
   margin-right: 10px;
+  padding: 0.5em;
 }
 
 .cButtonType00Red {
   border-radius: 5px;
-  background-color: red;
+  background-color: var(--red-burger);
   text-shadow: 1px 1px 6px #000;
   font-size: 1.3em;
   margin-right: 10px;
@@ -426,9 +471,9 @@ p {
 .cButtonType03 {
   border-radius: 5px;
   background-color: #dba42b;
-  text-shadow: 1px 1px 6px #000;
   font-size: 100%;
   width: 40%;
+  padding: 0.5em;
 }
 
 .cButtonType04 {
@@ -454,12 +499,12 @@ p {
   width: 80%;
 }
 .cButtonTypeClOr {
-  border-bottom-right-radius: 13px;
-  border-style: none;
-  background-color: red;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: var(--red-burger);
   text-shadow: 1px 1px 6px #000;
   padding: 10px;
-  width: 20%;
+  margin: 0px;
 }
 
 .cButtonTypeConfirmOr {
@@ -481,7 +526,7 @@ p {
 
 .cBtonwithNoty {
   display: flex;
-  height: 50%;
+  height: 65%;
   top: 50%;
   margin-right: 30px;
 }
@@ -492,6 +537,45 @@ p {
   text-shadow: 1px 1px 5px #000;
   font-size: 1.3em;
   margin: 0;
+  padding: 0.5em;
+}
+
+.cButtonTypeLogOut {
+  border-radius: 5px;
+  background-color: #dba42b;
+  font-size: 1.3em;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.cButtonTypeDeleteCostumer {
+  border-radius: 5px;
+  background-color: var(--red-burger);
+  font-size: 1.3em;
+  font-weight: bolder;
+  padding: 0.5em;
+}
+
+.cButtonType00WithOutMargin {
+  border-radius: 5px;
+  background-color: #dba42b;
+  font-size: 1.3em;
+  padding: 0.5em;
+}
+
+.cButtonType00WithOutMarginRed {
+  border-radius: 5px;
+  background-color: var(--red-burger);
+  font-size: 1.3em;
+  padding: 0.5em;
+}
+
+.cButtonType00WithOutMarginGreen {
+  border-radius: 5px;
+  background-color: Green;
+  font-size: 1.3em;
+  padding: 0.5em;
 }
 
 /*Fonts/////////////////////////////////////*/
@@ -499,7 +583,6 @@ p {
 .cFontTypeTitleS {
   color: black;
   font-weight: bold;
-  text-shadow: 1px 1px 4px #000;
   font-size: 1.3em;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
@@ -508,7 +591,6 @@ p {
 .cFontTypeTitleS_White {
   color: white;
   font-weight: bold;
-  text-shadow: 1px 1px 4px #000;
   font-size: 1.3em;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
@@ -517,7 +599,6 @@ p {
 .cFontTypeTitleM {
   color: white;
   font-weight: bold;
-  text-shadow: 1px 1px 6px #000;
   font-size: 1.8em;
   font-family: "Lucida Sans", Geneva, Verdana, sans-seriff;
 }
@@ -533,7 +614,6 @@ p {
 .cFontTypeTitleSB {
   color: black;
   font-weight: bolder;
-  text-shadow: 1px 1px 6px #000;
   font-size: 1.4em;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;
@@ -550,7 +630,7 @@ p {
 .cFontTypeTextSB {
   color: black;
   font-weight: bolder;
-  text-shadow: 1px 1px 1px #000;
+
   font-size: 1.4em;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-seriff;

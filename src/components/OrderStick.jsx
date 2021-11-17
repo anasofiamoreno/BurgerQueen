@@ -52,7 +52,7 @@ export function OrderStick({ name, order, ordername, date, state, orderTime }) {
           <tbody>
             {Object.keys(order).map((item) => {
               return (
-                <tr>
+                <tr key={ordername + "trd"}>
                   <td>{order[item].quantity}</td>
                   <td>{item}</td>
                 </tr>

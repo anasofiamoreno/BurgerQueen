@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { getFirestore, updateDoc, doc, deleteField } from "firebase/firestore";
-import { ref, getDatabase, update } from "firebase/database";
 
-export function ResumeOrder({ state, fnData, classState, userState }) {
+export function ResumeOrder({
+  state,
+  fnData,
+  classState,
+  userState,
+  sCostumer,
+}) {
   const [orderInProgress, setOrderInProgress] = useState(0);
 
   useEffect(() => {
-    console.log();
     setOrderInProgress(
-      Object.keys(state.costumers[state.sCostumer].ordersInKitchen).length
+      Object.keys(state.costumers[sCostumer].ordersInKitchen).length
     );
-  }, [orderInProgress, state.sCostumer, state.costumers]);
+  }, [orderInProgress, sCostumer, state.costumers]);
 
   let costumerArray = [];
   let totalCost = 0;
   const db = getFirestore();
-  const setdb = getDatabase();
 
   if (Object.entries(state.costumers).length >= 1) {
     costumerArray = ["", "no entries"];
     costumerArray = Object.entries(state.costumers).find(
-      (element) => element[0] === state.sCostumer
+      (element) => element[0] === sCostumer
     );
     costumerArray = Object.entries(costumerArray[1].orders);
     costumerArray.forEach((element) => {
@@ -38,58 +41,26 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
     const date = Date.now();
     const nOrder = uuidv4().slice(0, 8);
 
-    let tempOrder = state.costumers[state.sCostumer];
+    let tempOrder = state.costumers[sCostumer];
     tempOrder.date = date;
-    if (orderInProgress === 0) {
-      const washingtonRef = doc(db, "validUsers", userState.name);
 
-      // Set the "capital" field of the city 'DC'
-      await updateDoc(washingtonRef, {
-        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".items"]:
-          state.costumers[state.sCostumer].orders,
+    const Ref = doc(db, "validUsers", userState.name);
 
-        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".date"]:
-          date,
+    await updateDoc(Ref, {
+      ["costumers." + [sCostumer] + ".orders." + nOrder + ".items"]:
+        state.costumers[sCostumer].orders,
 
-        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".state"]:
-          "doing",
+      ["costumers." + [sCostumer] + ".orders." + nOrder + ".date"]: date,
 
-        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".time"]: "",
-      });
-    } else {
-      const washingtonRef = doc(db, "validUsers", userState.name);
+      ["costumers." + [sCostumer] + ".orders." + nOrder + ".state"]: "doing",
 
-      // Set the "capital" field of the city 'DC'
-      await updateDoc(washingtonRef, {
-        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".items"]:
-          state.costumers[state.sCostumer].orders,
+      ["costumers." + [sCostumer] + ".orders." + nOrder + ".time"]: "",
 
-        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".date"]:
-          date,
+      sCostumer: sCostumer,
+    });
 
-        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".state"]:
-          "doing",
-
-        ["costumers." + [state.sCostumer] + ".orders." + nOrder + ".time"]: "",
-      });
-
-      const updates = {};
-      updates[
-        "orders/" +
-          state.user.name.slice(0, 1 + state.user.name.search("@")) +
-          "/" +
-          state.sCostumer +
-          "/" +
-          [uuidv4().slice(0, 8)]
-      ] = tempOrder;
-
-      await update(ref(setdb), updates);
-    }
-
-    let items = state.costumers[state.sCostumer];
+    let items = state.costumers[sCostumer];
     items.orders = {};
-    fnData("changCostumer", items);
-
     fnData("doEvents");
   };
 
@@ -99,14 +70,14 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
 
   const fnClear = () => {
     const newCostumer = state.costumers;
-    newCostumer[state.sCostumer].orders = {};
+    newCostumer[sCostumer].orders = {};
     fnData("render");
     //fnData("delCostumers", newCostumer);
   };
 
   const fnShowOrdersInProgress = () => {
     return (
-      <table>
+      <table className="cTableStatusOrders">
         <thead>
           <tr>
             <th>Order</th>
@@ -115,31 +86,44 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
           </tr>
         </thead>
         <tbody>
-          {Object.entries(state.costumers[state.sCostumer].ordersInKitchen).map(
+          {Object.entries(state.costumers[sCostumer].ordersInKitchen).map(
             (itemss) => {
               return (
-                <tr>
-                  <td>{itemss[0]}</td>
-                  <td>{itemss[1].state}</td>
+                <tr key={itemss[0]}>
+                  <td>{"No. " + itemss[0]}</td>
+                  <td>
+                    {itemss[1].state.charAt(0).toUpperCase() +
+                      itemss[1].state.slice(1)}
+                  </td>
                   <td>
                     {itemss[1].state === "doing" && (
                       <button
-                        className="cButtonType00"
+                        className="cButtonType00WithOutMarginRed"
                         onClick={() => {
                           fnEditStateOrder(itemss[0], "cancel");
                         }}
                       >
-                        Cancel Order
+                        Cancel
                       </button>
                     )}
                     {itemss[1].state === "ready" && (
                       <button
-                        className="cButtonType00"
+                        className="cButtonType00WithOutMarginGreen"
                         onClick={() => {
                           fnEditStateOrder(itemss[0], "served");
                         }}
                       >
-                        Served
+                        Done
+                      </button>
+                    )}
+                    {itemss[1].state === "stored" && (
+                      <button
+                        className="cButtonType00WithOutMarginGreen"
+                        onClick={() => {
+                          fnEditStateOrder(itemss[0], "served");
+                        }}
+                      >
+                        Done
                       </button>
                     )}
                   </td>
@@ -156,31 +140,26 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
     const Ref = doc(db, "validUsers", userState.name);
 
     await updateDoc(Ref, {
-      ["costumers." + [state.sCostumer] + ".orders." + order + ".state"]:
-        newState,
+      ["costumers." + [sCostumer] + ".orders." + order + ".state"]: newState,
+      sCostumer: sCostumer,
     });
   };
 
   const fnDeleteCostumer = async () => {
     const Ref = doc(db, "validUsers", userState.name);
 
-    await updateDoc(Ref, {
-      ["costumers." + state.sCostumer]: deleteField(),
-    });
-
     const newCostumer = {};
     Object.keys(state.costumers).forEach((costumer) => {
-      if (costumer !== state.sCostumer)
+      if (costumer !== sCostumer)
         newCostumer[costumer] = state.costumers[costumer];
     });
-    let newSCostumer = "";
-    Object.keys(state.costumers).forEach((element, i) => {
-      if (i === 0) {
-        newSCostumer = element;
-      }
+
+    fnData("setAllCOstumers", newCostumer);
+
+    await updateDoc(Ref, {
+      ["costumers." + sCostumer]: deleteField(),
+      sCostumer: "",
     });
-    console.log(newCostumer);
-    fnData("teste", newCostumer, newSCostumer);
   };
 
   return (
@@ -188,7 +167,7 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
       <div key={uuidv4()} className="cContournResumeOrder">
         <div>
           <p key={uuidv4()} className="cFontTypeTitleMB">
-            Resume {state.sCostumer}
+            Resume {sCostumer}
           </p>
 
           {totalCost === 0 && (
@@ -199,8 +178,11 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
                 </p>
 
                 {orderInProgress === 0 && (
-                  <button className="cButtonType00" onClick={fnDeleteCostumer}>
-                    Delet Costumer
+                  <button
+                    className="cButtonTypeDeleteCostumer"
+                    onClick={fnDeleteCostumer}
+                  >
+                    Delete Costumer
                   </button>
                 )}
                 {orderInProgress !== 0 && fnShowOrdersInProgress()}
@@ -273,7 +255,7 @@ export function ResumeOrder({ state, fnData, classState, userState }) {
             <div>
               <button
                 key={uuidv4()}
-                className="cButtonTypeMkOr cFontTypeTitleM"
+                className="cButtonTypeConfirmOr cFontTypeTitleM"
                 type="button"
                 onClick={fnSendOrderToServer}
               >

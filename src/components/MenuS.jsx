@@ -3,7 +3,7 @@ import Logo from "../img/logo.png";
 import notify from "../img/iconburgerred01png.png";
 import { v4 as uuidv4 } from "uuid";
 
-export function MenuS({ state, fnData, classState, userState }) {
+export function MenuS({ state, fnData, classState, userState, sCostumer }) {
   const [inputCostumer, setinputCostumer] = useState(false);
   const fnShowMenuLogIn = () => {
     document.getElementById("idLogIn").style.display = "block";
@@ -20,7 +20,7 @@ export function MenuS({ state, fnData, classState, userState }) {
         ordersInKitchen: {},
       };
 
-      fnData("setCostumers", newCostumer);
+      fnData("setAllCostumers", newCostumer);
       fnData("sCostumer", nameCostumer);
 
       //state = {state, sCostumer: nameCostumer}
@@ -43,8 +43,8 @@ export function MenuS({ state, fnData, classState, userState }) {
     <div id="idMenuS" className={classState.MenuS}>
       <div className="cMenuSI">
         <img className="cImgLogo" src={Logo} alt="Logo BurgerQueen"></img>
-        {Object.entries(state.costumers).map((element) => (
-          <div className="cBtonwithNoty">
+        {Object.entries(state.costumers).map((element, i) => (
+          <div key={element[0] + i} className="cBtonwithNoty">
             <button
               key={uuidv4()}
               id={element[0]}
@@ -54,7 +54,12 @@ export function MenuS({ state, fnData, classState, userState }) {
               {element[0]}
             </button>
             {state.costumers[element[0]].noty === 1 && (
-              <img className="cImgNoty" src={notify} alt="noty"></img>
+              <img
+                key={"noty" + element[0]}
+                className="cImgNoty"
+                src={notify}
+                alt="noty"
+              ></img>
             )}
           </div>
         ))}
@@ -111,7 +116,7 @@ export function MenuS({ state, fnData, classState, userState }) {
               id="idBtnCreateOrder"
               className="cButtonType00"
             >
-              Creat Order
+              Create Order
             </button>
           )}
       </div>
